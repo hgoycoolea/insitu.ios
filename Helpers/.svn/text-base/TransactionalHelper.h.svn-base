@@ -1,0 +1,9 @@
+
+#import <UIKit/UIKit.h>
+
+@interface TransactionalHelper : NSObject
+/// This Method is the Identity Request for the Server
+-(NSString *) CommitProvisioningTransactionRequestForUser : (NSString *)user withPasssword:(NSString *)pwd withActionParamenter:(NSString *)a Take:(NSString *) t;
+-(NSString *) CommitFriendsTransactionRequestForUser : (NSString *)user withPasssword:(NSString *)pwd withActionParamenter:(NSString *)a Take:(NSString *) t;
+-(NSString *) CommitForeignProvisioningTransactionRequestForUser : (NSString *)user withPasssword:(NSString *)pwd withActionParamenter:(NSString *)a withAuxiliar:(NSString *)z Take:(NSString *)t;
+@end

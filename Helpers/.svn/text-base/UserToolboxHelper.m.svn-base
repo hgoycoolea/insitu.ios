@@ -1,0 +1,57 @@
+//
+//  UserToolboxHelper.m
+//  Ranner
+//
+//  Created by Hector Goycoolea on 6/18/12.
+//
+//
+#import "UserToolboxHelper.h
+#import "CredentialHelper.h"
+/// Main implementation
+@implementation UserToolboxHelper
+
+#pragma mark - User ToolBox Main Methods
+/// This User loads the user Full Name
+- (NSString *) GetUserFullName
+{
+    /// first we make the animation on the top view work
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    /// we create a new pool of data to be release
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    /// prefferences
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    /// user assignment
+    NSString *u =[prefs objectForKey:@"userName"];
+    NSString *p = [prefs objectForKey:@"passWord"];
+    /// we initilialize the helper
+    CredentialHelper *helper = [[CredentialHelper alloc] init];
+    /// this is the response from the helper
+    NSString *response = [helper IdentityRequestForUser:u withPasssword:p withActionParamenter:@"0"];
+    /// now we set the user name on the top
+    return response;
+    /// this gives the title to the Navigation Bar
+    /// we release the pool
+    [pool release];
+}
+/// This Method Loads the Users Picture
+- (UIImage *) GetUserProfilePicture
+{
+    /// first we make the animation on the top view work
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    /// we create a new pool of data to be release
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    /// prefferences
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    /// user assignment
+    NSString *u =[prefs objectForKey:@"userName"];
+    NSString *p = [prefs objectForKey:@"passWord"];
+    /// we initilialize the helper
+    CredentialHelper *helper = [[CredentialHelper alloc] init];
+    /// this is the response from the helper
+    NSString *response = [helper IdentityRequestForUser:u withPasssword:p withActionParamenter:@"1"];
+    /// this is the profile picture load
+    return [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:response]]];
+    /// we release the pool
+    [pool release];
+}
+@end

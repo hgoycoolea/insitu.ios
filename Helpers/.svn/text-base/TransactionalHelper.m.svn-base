@@ -1,0 +1,102 @@
+#import "TransactionalHelper.h"
+#include "ASIFormDataRequest.h"
+#import "EncryptionHelper.h"
+///
+@implementation TransactionalHelper
+/// This are all the 
+-(NSString *) CommitProvisioningTransactionRequestForUser : (NSString *)user withPasssword:(NSString *)pwd withActionParamenter:(NSString *)a Take:(NSString *)t;
+{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://broker.viento.mobi/TxProvisioningRequest.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_u = [rsa Encrypt:user];
+        NSString *encr_p = [rsa Encrypt:pwd];
+        NSString *encr_a = [rsa Encrypt:a];
+        NSString *encr_t = [rsa Encrypt:t];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_u forKey:@"__u"];
+        [request setPostValue:encr_p forKey:@"__p"];
+        [request setPostValue:encr_a forKey:@"__a"];
+        [request setPostValue:encr_t forKey:@"__t"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+}
+/// This are all the 
+-(NSString *) CommitForeignProvisioningTransactionRequestForUser : (NSString *)user withPasssword:(NSString *)pwd withActionParamenter:(NSString *)a withAuxiliar:(NSString *)z Take:(NSString *)t;
+{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://broker.viento.mobi/TxForeignProvisioningRequest.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_u = [rsa Encrypt:user];
+        NSString *encr_p = [rsa Encrypt:pwd];
+        NSString *encr_a = [rsa Encrypt:a];
+        NSString *encr_t = [rsa Encrypt:t];
+        NSString *encr_z = [rsa Encrypt:z];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_u forKey:@"__u"];
+        [request setPostValue:encr_p forKey:@"__p"];
+        [request setPostValue:encr_a forKey:@"__a"];
+        [request setPostValue:encr_t forKey:@"__t"];
+        [request setPostValue:encr_z forKey:@"__z"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+}
+
+/// This are all the
+-(NSString *) CommitFriendsTransactionRequestForUser : (NSString *)user withPasssword:(NSString *)pwd withActionParamenter:(NSString *)a Take:(NSString *)t;
+{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://broker.viento.mobi/TxFriendsRequest.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_u = [rsa Encrypt:user];
+        NSString *encr_p = [rsa Encrypt:pwd];
+        NSString *encr_a = [rsa Encrypt:a];
+        NSString *encr_t = [rsa Encrypt:t];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_u forKey:@"__u"];
+        [request setPostValue:encr_p forKey:@"__p"];
+        [request setPostValue:encr_a forKey:@"__a"];
+        [request setPostValue:encr_t forKey:@"__t"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+}
+@end
