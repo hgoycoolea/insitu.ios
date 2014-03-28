@@ -7,8 +7,10 @@
 //
 
 #import "FlipsideViewController.h"
+#import "PCollectionViewLayout.h"
+#import "PCollectionCellBackgroundView.h"
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,CLLocationManagerDelegate>{
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegateJSPintLayout,UICollectionViewDataSource>{
     //Signature Drawing Items
     CGPoint lastPoint;
     //
