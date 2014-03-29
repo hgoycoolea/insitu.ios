@@ -10,7 +10,7 @@
 #import "PCollectionViewLayout.h"
 #import "PCollectionCellBackgroundView.h"
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegateJSPintLayout,UICollectionViewDataSource>{
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegateJSPintLayout,UICollectionViewDelegate,UICollectionViewDataSource>{
     //Signature Drawing Items
     CGPoint lastPoint;
     //
@@ -19,7 +19,11 @@
     #pragma mark - CLLocationManager
     //// Location Manager Controller
     CLLocationManager *locationManager;
+#pragma mark - UIRefreshControl
+    UIRefreshControl *refreshControl;
 }
 #pragma mark - CLLocationManager
 @property (nonatomic, retain) IBOutlet CLLocationManager *locationManager;
+
+@property (nonatomic, retain) IBOutlet UIRefreshControl *refreshControl;
 @end

@@ -21,6 +21,7 @@
 @implementation MainViewController
 
 @synthesize locationManager;
+@synthesize refreshControl;
 /*
  *
  */
@@ -28,16 +29,6 @@
 {
     [super viewDidLoad];
     
-    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // Add code here to do background processing
-        //
-        //
-        dispatch_async( dispatch_get_main_queue(), ^{
-            // Add code here to update the UI/send notifications based on the
-            // results of the background processing
-            [self InitializeCLControler];
-        });
-    });
     //[self InitializeCLControler];
     /// we download the categories
     [self downloadPromocionesCategorias];
@@ -49,26 +40,65 @@
     // set inter-item spacing in the layout
     PCollectionViewLayout* customLayout = (PCollectionViewLayout*)self.collectionView.collectionViewLayout;
     customLayout.interitemSpacing = 14.0;
-    
     // make up some test data
     self.photoList = [NSMutableArray arrayWithCapacity:1];
-    [self.photoList addObject:@"danielle.jpg"];
-    [self.photoList addObject:@"bodegahead.png"];
-    [self.photoList addObject:@"egret.png"];
-    [self.photoList addObject:@"betceemay.jpg"];
-    [self.photoList addObject:@"baby.jpg"];
-    [self.photoList addObject:@"danielle.jpg"];
-    [self.photoList addObject:@"bodegahead.png"];
-    [self.photoList addObject:@"egret.png"];
-    [self.photoList addObject:@"betceemay.jpg"];
-    [self.photoList addObject:@"baby.jpg"];
-    [self.photoList addObject:@"danielle.jpg"];
-    [self.photoList addObject:@"bodegahead.png"];
-    [self.photoList addObject:@"egret.png"];
-    [self.photoList addObject:@"betceemay.jpg"];
-    [self.photoList addObject:@"baby.jpg"];
+    // make up some test data
+    NSMutableArray *datasource = [[NSMutableArray alloc] initWithObjects:nil];
+    [datasource addObject:@"danielle.jpg"];
+    [datasource addObject:@"bodegahead.png"];
+    [datasource addObject:@"egret.png"];
+    [datasource addObject:@"betceemay.jpg"];
+    [datasource addObject:@"baby.jpg"];
+    
+    [self createFileList:datasource];
     
     [self.collectionView reloadData];
+    
+    // Start the long-running task and return immediately.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Do the work associated with the task, preferably in chunks.
+        NSTimer* t = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(InitializeCLControler) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:t forMode:NSDefaultRunLoopMode];
+        [[NSRunLoop currentRunLoop] run];
+    });
+    /// Refresh Control for the UITabletView
+    UIRefreshControl *_refreshControl = [[UIRefreshControl alloc] init];
+    _refreshControl.tintColor = [UIColor blackColor];
+    [_refreshControl addTarget:self action:@selector(reRender) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = _refreshControl;
+    /// Addsubview
+    [self.collectionView addSubview: refreshControl];
+
+}
+-(void)addNewCells {
+    [self.collectionView performBatchUpdates:^{
+        int resultsSize = [self.photoList count];
+        [self.photoList addObjectsFromArray:self.photoList];
+        NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
+        for (int i = resultsSize; i < resultsSize + self.photoList.count; i++){
+            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        }
+     [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
+    }    completion:nil];
+}
+/// -(void)reRenderCoupons
+-(void)reRender
+{
+    [self.photoList removeAllObjects];
+    [self.collectionView reloadData];
+    
+    //[self getUsersTransactions];
+    
+    [self performSelector:@selector(updateTable) withObject:nil afterDelay:1];
+}
+/// UpdateTable Method
+- (void)updateTable
+{
+    /// Reload Data
+    [self.collectionView reloadData];
+    /// End Refreshing
+    [self.refreshControl endRefreshing];
 }
 /*
  *
@@ -180,12 +210,18 @@
                                                     inSection:0];
     [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
     
-    [self.collectionView scrollToItemAtIndexPath:newIndexPath
-                                atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                        animated:YES];
+    [self.collectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
 }
 
-
+- (void)createFileList:(NSArray *)items
+{
+    
+    for(NSString *item in items)
+    {
+        [self.photoList addObject:item];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:[self.photoList count]-1 inSection:0]]];
+    }
+}
 
 #pragma mark - UICollectionViewDelegateJSPintLayout
 
@@ -194,7 +230,7 @@
 
 - (CGFloat)columnWidthForCollectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout
 {
-    return 133.0;
+    return 153.0;
 }
 
 - (NSUInteger)maximumNumberOfColumnsForCollectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout

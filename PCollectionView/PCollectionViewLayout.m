@@ -30,14 +30,14 @@
 - (void)setLineSpacing:(CGFloat)lineSpacing
 {
     // sanity checks
-    if((lineSpacing >= 0.0) && (lineSpacing < 400))
+    if((lineSpacing >= 0.0) && (lineSpacing < 410))
         _lineSpacing = lineSpacing;
 }
 
 - (void)setInteritemSpacing:(CGFloat)interitemSpacing
 {
     // sanity checks
-    if((interitemSpacing >= 0.0) && (interitemSpacing < 400))
+    if((interitemSpacing >= 0.0) && (interitemSpacing < 410))
         _interitemSpacing = interitemSpacing;
 }
 
