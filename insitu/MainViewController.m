@@ -22,6 +22,14 @@
 
 @synthesize locationManager;
 @synthesize refreshControl;
+
+-(void)viewDidAppear:(BOOL)animated{
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       [self.collectionView reloadData];
+                       
+                   });
+}
 /*
  *
  */
@@ -29,6 +37,8 @@
 {
     [super viewDidLoad];
     
+    UIView *aView = [UIView new];
+    [self.collectionView addSubview:aView];
     //[self InitializeCLControler];
     /// we download the categories
     [self downloadPromocionesCategorias];
@@ -219,7 +229,7 @@
     for(NSString *item in items)
     {
         [self.photoList addObject:item];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:[self.photoList count]-1 inSection:0]]];
+        //[self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:[self.photoList count]-1 inSection:0]]];
     }
 }
 
