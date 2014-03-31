@@ -87,13 +87,14 @@
     [self.collectionView reloadData];
     
     //[self getUsersTransactions];
+    [self downloadPromocionesCategorias];
     
     [self performSelector:@selector(updateTable) withObject:nil afterDelay:1];
 }
 /// UpdateTable Method
 - (void)updateTable
 {
-    /// Reload Data
+    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
     [self.collectionView reloadData];
     /// End Refreshing
     [self.refreshControl endRefreshing];
@@ -367,6 +368,48 @@
     label.text = self.contentList[index];
     
     [cell.contentView addSubview:label];
+    
+    /// this is the actual size of the cell
+    CGRect fPrev = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath].frame;
+    CGFloat height = fPrev.size.height;
+    CGFloat width = fPrev.size.width;
+    /// let's make a circle of the avatar for the company
+    UIImageView* imageViewSpliter = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"splitImage.png"] ];
+    imageViewSpliter.frame = CGRectMake(0,height-70,width,1);
+    [cell.contentView addSubview:imageViewSpliter];
+
+    /// let's make a circle of the avatar for the company
+    UIImageView* imageViewTag = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396308511_tag_fill.png"] ];
+    imageViewTag.frame = CGRectMake(width-30,height-60,20,20);
+    [cell.contentView addSubview:imageViewTag];
+    
+    /// let's make a circle of the avatar for the company
+    UIImageView* imageViewShare = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396308581_share.png"] ];
+    imageViewShare.frame = CGRectMake(width-65,height-60,20,20);
+    [cell.contentView addSubview:imageViewShare];
+
+    
+    /// let's make a circle of the avatar for the company
+    UIImageView* imageViewFavorite = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396306261_star.png"] ];
+    imageViewFavorite.frame = CGRectMake(width-30,height-30,20,20);
+    [cell.contentView addSubview:imageViewFavorite];
+    
+    /// let's make a circle of the avatar for the company
+    UIImageView* imageViewPin = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396307328_pin.png"] ];
+    imageViewPin.frame = CGRectMake(width-65,height-30,20,20);
+    [cell.contentView addSubview:imageViewPin];
+
+    /// let's make a circle of the avatar for the company
+    UIImageView* imageViewAvatar = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
+    //imageViewAvatar.layer.cornerRadius = 8.f;
+    imageViewAvatar.layer.cornerRadius = 25;
+    imageViewAvatar.clipsToBounds = YES;
+    // imageViewAvatar.layer.borderColor = [UIColor whiteColor].CGColor;
+    // imageViewAvatar.layer.borderWidth = 3.0;
+    
+    imageViewAvatar.frame = CGRectMake(4,height-60,50,50);
+    [cell.contentView addSubview:imageViewAvatar];
+    
     
     
     return cell;
