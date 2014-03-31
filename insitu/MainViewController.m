@@ -12,6 +12,8 @@
 @property (strong,nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray* photoList;
 @property (strong,nonatomic) NSMutableArray* contentList;
+@property (strong,nonatomic) NSMutableArray* titleList;
+@property (strong,nonatomic) NSMutableArray* logosList;
 @end
 
 #define kCollectionCellBorderTop 0
@@ -191,6 +193,8 @@
     // make up some test data
     self.photoList = [NSMutableArray arrayWithCapacity:1];
     self.contentList = [NSMutableArray arrayWithCapacity:1];
+    self.logosList = [NSMutableArray arrayWithCapacity:1];
+    self.titleList = [NSMutableArray arrayWithCapacity:1];
     // make up some test data
     NSMutableArray *datasource = [[NSMutableArray alloc] initWithObjects:nil];
     /*[datasource addObject:@"danielle.jpg"];
@@ -224,9 +228,13 @@
         NSString *fecha_termino = [keys objectForKey:@"FechaTermino"];
         NSString *estado = [keys objectForKey:@"Estado"];
         NSString *categoria = [keys objectForKey:@"Categoria"];
+        /// we now get the logo from the merchant
+        NSString *logo_mercante = [helper getLogoMercantePorID:[NSString stringWithFormat:@"%d" , [mercante intValue]]];
         /// we add the promotion
         [datasource addObject:url_image];
         [self.contentList addObject:cuerpo];
+        [self.logosList addObject:logo_mercante];
+        [self.titleList addObject:titulo];
     }
     
     [self createFileList:datasource];
@@ -358,15 +366,18 @@
     
     [cell.contentView addSubview:imageView];
     
-    CGRect rctLabel = CGRectMake(kCollectionCellBorderLeft,kCollectionCellBorderTop + rctSizeFinal.height + 5,rctSizeFinal.width,65);
+    CGRect rctLabelTitle = CGRectMake(4,kCollectionCellBorderTop + rctSizeFinal.height + 1,rctSizeFinal.width-4,65);
+    UILabel* labelt = [[UILabel alloc] initWithFrame:rctLabelTitle];
+    labelt.numberOfLines = 0;
+    labelt.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+    labelt.text = self.titleList[index];
+    [cell.contentView addSubview:labelt];
     
+    CGRect rctLabel = CGRectMake(4,kCollectionCellBorderTop + rctSizeFinal.height + 30,rctSizeFinal.width-4,65);
     UILabel* label = [[UILabel alloc] initWithFrame:rctLabel];
     label.numberOfLines = 0;
-    label.font = [UIFont systemFontOfSize:12];
-    
-    //label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+    label.font = [UIFont fontWithName:@"Helvetica" size:9];
     label.text = self.contentList[index];
-    
     [cell.contentView addSubview:label];
     
     /// this is the actual size of the cell
@@ -400,7 +411,7 @@
     [cell.contentView addSubview:imageViewPin];
 
     /// let's make a circle of the avatar for the company
-    UIImageView* imageViewAvatar = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
+    UIImageView* imageViewAvatar = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.logosList[index]]]] ];
     //imageViewAvatar.layer.cornerRadius = 8.f;
     imageViewAvatar.layer.cornerRadius = 25;
     imageViewAvatar.clipsToBounds = YES;

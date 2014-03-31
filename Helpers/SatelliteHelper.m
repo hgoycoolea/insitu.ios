@@ -148,5 +148,28 @@
     }
     
 }
-
+-(NSString *) getLogoMercantePorID: (NSString *)mercante{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/getLogoMercantePorID.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_m = [rsa Encrypt:mercante];
+        //NSString *encr_alt = [rsa Encrypt:alt];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_m forKey:@"__m"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+}
 @end
