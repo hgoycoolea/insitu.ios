@@ -12,7 +12,8 @@
 
 -(NSString *) acknowledgeRutas: (NSString *)lat Longitude:(NSString *)lon Speed:(NSString *)speed Altitude:(NSString *)alt Client:(NSString *) client;
 -(NSString *) readRutas: (NSString *)client;
--(NSString *) readPromocionesPorCategorias: (NSString *)categorias;
--(NSString *) readPromocionesPorGeolocation: (NSString *)lat Longitude:(NSString *)lon Tolerance:(NSString *)tolerance;
+-(NSString *) readPromocionesPorCategorias: (NSString *)categorias Barrio:(NSString *)barrio;
+-(NSString *) readPromocionesPorGeolocation: (NSString *)lat Longitude:(NSString *)lon Tolerance:(NSString *)tolerance Barrio:(NSString *)barrio;
 -(NSString *) getLogoMercantePorID: (NSString *)mercante;
+-(NSString *) getDistanceToPromociones: (NSString *)lat Longitude:(NSString *)lon Mercante:(NSString *)mercante;
 @end

@@ -89,7 +89,7 @@
 
 }
 
--(NSString *) readPromocionesPorCategorias: (NSString *)categorias
+-(NSString *) readPromocionesPorCategorias: (NSString *)categorias Barrio:(NSString *)barrio
 {
     @try {
         /// url for the request
@@ -98,10 +98,12 @@
         EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
         /// client encription
         NSString *encr_c = [rsa Encrypt:categorias];
+        NSString *encr_b = [rsa Encrypt:barrio];
         //NSString *encr_alt = [rsa Encrypt:alt];
         /// now a new request
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
         [request setPostValue:encr_c forKey:@"__c"];
+        [request setPostValue:encr_b forKey:@"__b"];
         [request setDelegate:self];
         [request startSynchronous];
         /// this gets the response from the server
@@ -116,7 +118,7 @@
     
 }
 
--(NSString *) readPromocionesPorGeolocation: (NSString *)lat Longitude:(NSString *)lon Tolerance:(NSString *)tolerance
+-(NSString *) readPromocionesPorGeolocation: (NSString *)lat Longitude:(NSString *)lon Tolerance:(NSString *)tolerance Barrio:(NSString *)barrio
 {
     @try {
         /// url for the request
@@ -130,11 +132,13 @@
         NSString *encr_a = [rsa Encrypt:axis];
         /// client encription
         NSString *encr_t = [rsa Encrypt:tolerance];
+        NSString *encr_b = [rsa Encrypt:barrio];
         //NSString *encr_alt = [rsa Encrypt:alt];
         /// now a new request
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
         [request setPostValue:encr_a forKey:@"__a"];
         [request setPostValue:encr_t forKey:@"__t"];
+        [request setPostValue:encr_b forKey:@"__b"];
         [request setDelegate:self];
         [request startSynchronous];
         /// this gets the response from the server
@@ -171,5 +175,37 @@
         /// we return the nack to the user
         return @"NACK";
     }
+}
+-(NSString *) getDistanceToPromociones: (NSString *)lat Longitude:(NSString *)lon Mercante:(NSString *)mercante
+{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/getDistanceToPromociones.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we create the axis in the shape lat,long
+        NSString *axis_comma = [lat stringByAppendingString:@","];
+        NSString *axis = [axis_comma stringByAppendingString:lon];
+        /// we encrypt the data to send it
+        NSString *encr_a = [rsa Encrypt:axis];
+        /// client encription
+        NSString *encr_m = [rsa Encrypt:mercante];
+        //NSString *encr_alt = [rsa Encrypt:alt];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_a forKey:@"__a"];
+        [request setPostValue:encr_m forKey:@"__m"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+    
 }
 @end

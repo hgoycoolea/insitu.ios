@@ -14,6 +14,7 @@
 @property (strong,nonatomic) NSMutableArray* contentList;
 @property (strong,nonatomic) NSMutableArray* titleList;
 @property (strong,nonatomic) NSMutableArray* logosList;
+@property (strong,nonatomic) NSMutableArray* distanceList;
 @end
 
 #define kCollectionCellBorderTop 0
@@ -195,25 +196,36 @@
     self.contentList = [NSMutableArray arrayWithCapacity:1];
     self.logosList = [NSMutableArray arrayWithCapacity:1];
     self.titleList = [NSMutableArray arrayWithCapacity:1];
+    self.distanceList = [NSMutableArray arrayWithCapacity:1];
     // make up some test data
     NSMutableArray *datasource = [[NSMutableArray alloc] initWithObjects:nil];
-    /*[datasource addObject:@"danielle.jpg"];
-    [datasource addObject:@"bodegahead.png"];
-    [datasource addObject:@"egret.png"];
-    [datasource addObject:@"betceemay.jpg"];
-    [datasource addObject:@"baby.jpg"];*/
-    
-    
     /// we initialize the helper
     SatelliteHelper *helper = [[SatelliteHelper alloc] init];
     /// this will show me the response
-    NSString *response = [helper readPromocionesPorCategorias:@"1"];
+    NSString *response = [helper readPromocionesPorCategorias:@"1" Barrio:@"1"];
     /// let's configure the data
     NSData* data=[response dataUsingEncoding: [NSString defaultCStringEncoding] ];
     /// error for the json objects
     NSError *error = nil;
     /// now we get an array of the all json file
     jsonObjects = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    
+    self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+    // we set the errro to manager
+    self.locationManager.distanceFilter = 50.0f;
+    /// we set the acuracy
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+    /// we delegate them to self
+    self.locationManager.delegate = self;
+    /// first we get the location Manager location
+    CLLocation *ulocation = [locationManager location];
+    /// we now get the coordinates
+    CLLocationCoordinate2D userCoordinate = ulocation.coordinate;
+    /// x coordinate
+    NSString *lat = [[NSString alloc]initWithFormat:@"%f", userCoordinate.latitude];
+    /// y coordinate
+    NSString *lon = [[NSString alloc ]initWithFormat:@"%f", userCoordinate.longitude ];
+
     /// let's loop foreach on the statement
     for(NSDictionary *keys in jsonObjects){
         NSString *_id = [keys objectForKey:@"ID"];
@@ -230,11 +242,13 @@
         NSString *categoria = [keys objectForKey:@"Categoria"];
         /// we now get the logo from the merchant
         NSString *logo_mercante = [helper getLogoMercantePorID:[NSString stringWithFormat:@"%d" , [mercante intValue]]];
+        NSString *distance = [helper getDistanceToPromociones:lat Longitude:lon Mercante:[NSString stringWithFormat:@"%d" , [mercante intValue]]];
         /// we add the promotion
         [datasource addObject:url_image];
         [self.contentList addObject:cuerpo];
         [self.logosList addObject:logo_mercante];
         [self.titleList addObject:titulo];
+        [self.distanceList addObject:distance];
     }
     
     [self createFileList:datasource];
@@ -355,6 +369,11 @@
     
     NSUInteger index = [indexPath indexAtPosition:1];
     
+    /// this is the actual size of the cell
+    CGRect fPrev = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath].frame;
+    CGFloat height = fPrev.size.height;
+    CGFloat width = fPrev.size.width;
+    
     UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
     
     //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
@@ -380,10 +399,22 @@
     label.text = self.contentList[index];
     [cell.contentView addSubview:label];
     
-    /// this is the actual size of the cell
-    CGRect fPrev = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath].frame;
-    CGFloat height = fPrev.size.height;
-    CGFloat width = fPrev.size.width;
+    CGRect rctLabelDist = CGRectMake(4,height-110,width-4,65);
+    UILabel* labeld = [[UILabel alloc] initWithFrame:rctLabelDist];
+    labeld.numberOfLines = 0;
+    labeld.font = [UIFont fontWithName:@"Helvetica-Bold" size:9];
+    NSInteger d = [self.distanceList[index] integerValue];
+    if(d>1000){
+        CGFloat dk = d/1000;
+        NSString *dks =[NSString stringWithFormat:@"%f" , dk];
+        NSInteger dki = [dks intValue];
+        labeld.text = [[NSString stringWithFormat:@"%d" , dki] stringByAppendingString:@" kilometros de ti."];
+    }else{
+        labeld.text = [[NSString stringWithFormat:@"%d" , d] stringByAppendingString:@" metros de ti."];
+    }
+    [cell.contentView addSubview:labeld];
+    
+    
     /// let's make a circle of the avatar for the company
     UIImageView* imageViewSpliter = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"splitImage.png"] ];
     imageViewSpliter.frame = CGRectMake(0,height-70,width,1);
