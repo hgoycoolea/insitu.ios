@@ -24,6 +24,8 @@
 }
 #pragma mark - CLLocationManager
 @property (nonatomic, retain) IBOutlet CLLocationManager *locationManager;
-
+#pragma mark - UIRefreshControl
 @property (nonatomic, retain) IBOutlet UIRefreshControl *refreshControl;
+#pragma mark - id jsonObjects
+@property (nonatomic, retain) IBOutlet id jsonObjects;
 @end

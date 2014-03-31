@@ -47,12 +47,9 @@
 		10AEF0FD18E478C000706359 /* SatelliteHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEF0FC18E478C000706359 /* SatelliteHelper.m */; };
 		10AEF10118E5FC9D00706359 /* PCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEF10018E5FC9D00706359 /* PCollectionViewLayout.m */; };
 		10AEF10418E5FD9800706359 /* PCollectionCellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEF10318E5FD9800706359 /* PCollectionCellBackgroundView.m */; };
-		10AEF10B18E60B1400706359 /* baby.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10AEF10518E60B1400706359 /* baby.jpg */; };
-		10AEF10C18E60B1400706359 /* betceemay.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10AEF10618E60B1400706359 /* betceemay.jpg */; };
-		10AEF10D18E60B1400706359 /* bodegahead.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AEF10718E60B1400706359 /* bodegahead.png */; };
-		10AEF10E18E60B1400706359 /* danielle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10AEF10818E60B1400706359 /* danielle.jpg */; };
-		10AEF10F18E60B1400706359 /* egret.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AEF10918E60B1400706359 /* egret.png */; };
-		10AEF11018E60B1400706359 /* pinkprius.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10AEF10A18E60B1400706359 /* pinkprius.jpg */; };
+		51E68D7018E9202D00AD09E3 /* bannerTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E68D6F18E9202D00AD09E3 /* bannerTop.png */; };
+		51E68D7218E9218E00AD09E3 /* 1396256767_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E68D7118E9218E00AD09E3 /* 1396256767_list.png */; };
+		51E68D7418E9239700AD09E3 /* 1396257354_cog.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E68D7318E9239700AD09E3 /* 1396257354_cog.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,12 +192,9 @@
 		10AEF10018E5FC9D00706359 /* PCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCollectionViewLayout.m; path = PCollectionView/PCollectionViewLayout.m; sourceTree = "<group>"; };
 		10AEF10218E5FD9800706359 /* PCollectionCellBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCollectionCellBackgroundView.h; path = PCollectionView/PCollectionCellBackgroundView.h; sourceTree = "<group>"; };
 		10AEF10318E5FD9800706359 /* PCollectionCellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCollectionCellBackgroundView.m; path = PCollectionView/PCollectionCellBackgroundView.m; sourceTree = "<group>"; };
-		10AEF10518E60B1400706359 /* baby.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = baby.jpg; sourceTree = "<group>"; };
-		10AEF10618E60B1400706359 /* betceemay.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = betceemay.jpg; sourceTree = "<group>"; };
-		10AEF10718E60B1400706359 /* bodegahead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bodegahead.png; sourceTree = "<group>"; };
-		10AEF10818E60B1400706359 /* danielle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = danielle.jpg; sourceTree = "<group>"; };
-		10AEF10918E60B1400706359 /* egret.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egret.png; sourceTree = "<group>"; };
-		10AEF10A18E60B1400706359 /* pinkprius.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pinkprius.jpg; sourceTree = "<group>"; };
+		51E68D6F18E9202D00AD09E3 /* bannerTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bannerTop.png; sourceTree = "<group>"; };
+		51E68D7118E9218E00AD09E3 /* 1396256767_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1396256767_list.png; sourceTree = "<group>"; };
+		51E68D7318E9239700AD09E3 /* 1396257354_cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1396257354_cog.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,12 +235,9 @@
 		10AEEFDE18E3933100706359 = {
 			isa = PBXGroup;
 			children = (
-				10AEF10518E60B1400706359 /* baby.jpg */,
-				10AEF10618E60B1400706359 /* betceemay.jpg */,
-				10AEF10718E60B1400706359 /* bodegahead.png */,
-				10AEF10818E60B1400706359 /* danielle.jpg */,
-				10AEF10918E60B1400706359 /* egret.png */,
-				10AEF10A18E60B1400706359 /* pinkprius.jpg */,
+				51E68D7318E9239700AD09E3 /* 1396257354_cog.png */,
+				51E68D7118E9218E00AD09E3 /* 1396256767_list.png */,
+				51E68D6F18E9202D00AD09E3 /* bannerTop.png */,
 				10AEF0FE18E5FC5D00706359 /* PCollectionView */,
 				10AEF0B418E4752F00706359 /* include */,
 				10AEF08018E46DAA00706359 /* ASIHTTPRequest */,
@@ -546,15 +537,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10AEF11018E60B1400706359 /* pinkprius.jpg in Resources */,
-				10AEF10C18E60B1400706359 /* betceemay.jpg in Resources */,
+				51E68D7218E9218E00AD09E3 /* 1396256767_list.png in Resources */,
 				10AEF00618E3933200706359 /* Images.xcassets in Resources */,
-				10AEF10B18E60B1400706359 /* baby.jpg in Resources */,
-				10AEF10F18E60B1400706359 /* egret.png in Resources */,
+				51E68D7018E9202D00AD09E3 /* bannerTop.png in Resources */,
 				10AEEFF518E3933100706359 /* InfoPlist.strings in Resources */,
-				10AEF10E18E60B1400706359 /* danielle.jpg in Resources */,
+				51E68D7418E9239700AD09E3 /* 1396257354_cog.png in Resources */,
 				10AEEFFE18E3933100706359 /* Main.storyboard in Resources */,
-				10AEF10D18E60B1400706359 /* bodegahead.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,7 +715,7 @@
 				INFOPLIST_FILE = "insitu/insitu-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/hgoycoolea/Developer/Git/insitu.ios,
+					/Users/goycolea/Developer/Git/insitu.ios,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -751,7 +739,7 @@
 				INFOPLIST_FILE = "insitu/insitu-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/hgoycoolea/Developer/Git/insitu.ios,
+					/Users/goycolea/Developer/Git/insitu.ios,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

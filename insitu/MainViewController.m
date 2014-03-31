@@ -11,23 +11,25 @@
 @interface MainViewController ()
 @property (strong,nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray* photoList;
+@property (strong,nonatomic) NSMutableArray* contentList;
 @end
 
-#define kCollectionCellBorderTop 17.0
-#define kCollectionCellBorderBottom 17.0
-#define kCollectionCellBorderLeft 17.0
-#define kCollectionCellBorderRight 17.0
+#define kCollectionCellBorderTop 0
+#define kCollectionCellBorderBottom 8.0
+#define kCollectionCellBorderLeft 2
+#define kCollectionCellBorderRight 2
 
 @implementation MainViewController
 
 @synthesize locationManager;
 @synthesize refreshControl;
+@synthesize jsonObjects;
 
 -(void)viewDidAppear:(BOOL)animated{
     dispatch_async(dispatch_get_main_queue(), ^
                    {
+                       [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
                        [self.collectionView reloadData];
-                       
                    });
 }
 /*
@@ -36,9 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UIView *aView = [UIView new];
-    [self.collectionView addSubview:aView];
     //[self InitializeCLControler];
     /// we download the categories
     [self downloadPromocionesCategorias];
@@ -46,23 +45,12 @@
     // set up delegates
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    [self.view addSubview:self.collectionView];
     
     // set inter-item spacing in the layout
     PCollectionViewLayout* customLayout = (PCollectionViewLayout*)self.collectionView.collectionViewLayout;
     customLayout.interitemSpacing = 14.0;
-    // make up some test data
-    self.photoList = [NSMutableArray arrayWithCapacity:1];
-    // make up some test data
-    NSMutableArray *datasource = [[NSMutableArray alloc] initWithObjects:nil];
-    [datasource addObject:@"danielle.jpg"];
-    [datasource addObject:@"bodegahead.png"];
-    [datasource addObject:@"egret.png"];
-    [datasource addObject:@"betceemay.jpg"];
-    [datasource addObject:@"baby.jpg"];
     
-    [self createFileList:datasource];
-    
-    [self.collectionView reloadData];
     
     // Start the long-running task and return immediately.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -199,10 +187,48 @@
  *
  */
 - (void)downloadPromocionesCategorias {
+    // make up some test data
+    self.photoList = [NSMutableArray arrayWithCapacity:1];
+    self.contentList = [NSMutableArray arrayWithCapacity:1];
+    // make up some test data
+    NSMutableArray *datasource = [[NSMutableArray alloc] initWithObjects:nil];
+    /*[datasource addObject:@"danielle.jpg"];
+    [datasource addObject:@"bodegahead.png"];
+    [datasource addObject:@"egret.png"];
+    [datasource addObject:@"betceemay.jpg"];
+    [datasource addObject:@"baby.jpg"];*/
+    
+    
     /// we initialize the helper
     SatelliteHelper *helper = [[SatelliteHelper alloc] init];
     /// this will show me the response
     NSString *response = [helper readPromocionesPorCategorias:@"1"];
+    /// let's configure the data
+    NSData* data=[response dataUsingEncoding: [NSString defaultCStringEncoding] ];
+    /// error for the json objects
+    NSError *error = nil;
+    /// now we get an array of the all json file
+    jsonObjects = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    /// let's loop foreach on the statement
+    for(NSDictionary *keys in jsonObjects){
+        NSString *_id = [keys objectForKey:@"ID"];
+        NSString *mercante = [keys objectForKey:@"Mercante"];
+        NSString *producto = [keys objectForKey:@"Producto"];
+        NSString *porcentaje = [keys objectForKey:@"Porcentaje"];
+        NSString *titulo = [keys objectForKey:@"Titulo"];
+        NSString *cuerpo = [keys objectForKey:@"Cuerpo"];
+        NSString *barra = [keys objectForKey:@"Barra"];
+        NSString *url_image = [keys objectForKey:@"UrlImage"];
+        NSString *fecha_comienzo = [keys objectForKey:@"FechaComienzo"];
+        NSString *fecha_termino = [keys objectForKey:@"FechaTermino"];
+        NSString *estado = [keys objectForKey:@"Estado"];
+        NSString *categoria = [keys objectForKey:@"Categoria"];
+        /// we add the promotion
+        [datasource addObject:url_image];
+        [self.contentList addObject:cuerpo];
+    }
+    
+    [self createFileList:datasource];
     /// response to the log
     NSLog(@"%@",response);
 }
@@ -225,11 +251,9 @@
 
 - (void)createFileList:(NSArray *)items
 {
-    
     for(NSString *item in items)
     {
         [self.photoList addObject:item];
-        //[self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:[self.photoList count]-1 inSection:0]]];
     }
 }
 
@@ -240,7 +264,7 @@
 
 - (CGFloat)columnWidthForCollectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout
 {
-    return 153.0;
+    return 135.0;
 }
 
 - (NSUInteger)maximumNumberOfColumnsForCollectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout
@@ -254,7 +278,8 @@
 {
     NSUInteger index = [indexPath indexAtPosition:1];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
+    //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
+    UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
     CGSize rctSizeOriginal = imageView.bounds.size;
     double scale = (222  - (kCollectionCellBorderLeft + kCollectionCellBorderRight)) / rctSizeOriginal.width;
     CGSize rctSizeFinal = CGSizeMake(rctSizeOriginal.width * scale,rctSizeOriginal.height * scale);
@@ -321,7 +346,10 @@
     
     NSUInteger index = [indexPath indexAtPosition:1];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
+    UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
+    
+    //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
+    
     CGSize rctSizeOriginal = imageView.bounds.size;
     double scale = (cell.bounds.size.width  - (kCollectionCellBorderLeft + kCollectionCellBorderRight)) / rctSizeOriginal.width;
     CGSize rctSizeFinal = CGSizeMake(rctSizeOriginal.width * scale,rctSizeOriginal.height * scale);
@@ -335,7 +363,8 @@
     label.numberOfLines = 0;
     label.font = [UIFont systemFontOfSize:12];
     
-    label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+    //label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+    label.text = self.contentList[index];
     
     [cell.contentView addSubview:label];
     

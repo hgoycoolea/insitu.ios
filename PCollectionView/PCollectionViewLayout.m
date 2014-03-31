@@ -30,14 +30,14 @@
 - (void)setLineSpacing:(CGFloat)lineSpacing
 {
     // sanity checks
-    if((lineSpacing >= 0.0) && (lineSpacing < 410))
+    if((lineSpacing >= 0.0) && (lineSpacing < 400))
         _lineSpacing = lineSpacing;
 }
 
 - (void)setInteritemSpacing:(CGFloat)interitemSpacing
 {
     // sanity checks
-    if((interitemSpacing >= 0.0) && (interitemSpacing < 410))
+    if((interitemSpacing >= 0.0) && (interitemSpacing < 400))
         _interitemSpacing = interitemSpacing;
 }
 
@@ -200,9 +200,12 @@
 
 - (void)prepareForCollectionViewUpdates:(NSArray*)updateItems
 {
+    @try{
     // we only support one update at a time
     self.updateItem = updateItems[0];
-    
+    }@catch (NSException *exception) {
+        
+    }
     [self doNewLayout];
 }
 
