@@ -251,17 +251,7 @@
 		10AEEFDE18E3933100706359 = {
 			isa = PBXGroup;
 			children = (
-				51E68D8518E9EBAA00AD09E3 /* 1396308581_share.png */,
-				51E68D8318E9EB6600AD09E3 /* 1396308511_tag_fill.png */,
-				51E68D8118E9EAF800AD09E3 /* 1396308420_chart_alt.png */,
-				51E68D7D18E9EA4D00AD09E3 /* 1396308232_compass.png */,
-				51E68D7E18E9EA4D00AD09E3 /* 1396308239_calendar_alt_fill.png */,
-				51E68D7B18E9E6C000AD09E3 /* 1396307328_pin.png */,
-				51E68D7918E9E41C00AD09E3 /* 1396306261_star.png */,
-				51E68D7718E9D96A00AD09E3 /* splitImage.png */,
-				51E68D7318E9239700AD09E3 /* 1396257354_cog.png */,
-				51E68D7118E9218E00AD09E3 /* 1396256767_list.png */,
-				51E68D6F18E9202D00AD09E3 /* bannerTop.png */,
+				51CFBB4C18EB47A800552C64 /* Artwork */,
 				10AEF0FE18E5FC5D00706359 /* PCollectionView */,
 				10AEF0B418E4752F00706359 /* include */,
 				10AEF08018E46DAA00706359 /* ASIHTTPRequest */,
@@ -480,6 +470,24 @@
 				10AEF10318E5FD9800706359 /* PCollectionCellBackgroundView.m */,
 			);
 			name = PCollectionView;
+			sourceTree = "<group>";
+		};
+		51CFBB4C18EB47A800552C64 /* Artwork */ = {
+			isa = PBXGroup;
+			children = (
+				51E68D8518E9EBAA00AD09E3 /* 1396308581_share.png */,
+				51E68D8318E9EB6600AD09E3 /* 1396308511_tag_fill.png */,
+				51E68D8118E9EAF800AD09E3 /* 1396308420_chart_alt.png */,
+				51E68D7D18E9EA4D00AD09E3 /* 1396308232_compass.png */,
+				51E68D7E18E9EA4D00AD09E3 /* 1396308239_calendar_alt_fill.png */,
+				51E68D7B18E9E6C000AD09E3 /* 1396307328_pin.png */,
+				51E68D7918E9E41C00AD09E3 /* 1396306261_star.png */,
+				51E68D7718E9D96A00AD09E3 /* splitImage.png */,
+				51E68D7318E9239700AD09E3 /* 1396257354_cog.png */,
+				51E68D7118E9218E00AD09E3 /* 1396256767_list.png */,
+				51E68D6F18E9202D00AD09E3 /* bannerTop.png */,
+			);
+			name = Artwork;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
