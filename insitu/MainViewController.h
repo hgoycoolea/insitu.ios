@@ -7,10 +7,11 @@
 //
 
 #import "FlipsideViewController.h"
+#import "MenuViewController.h"
 #import "PCollectionViewLayout.h"
 #import "PCollectionCellBackgroundView.h"
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegateJSPintLayout,UICollectionViewDelegate,UICollectionViewDataSource>{
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,MenuViewControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegateJSPintLayout,UICollectionViewDelegate,UICollectionViewDataSource>{
     //Signature Drawing Items
     CGPoint lastPoint;
     //
@@ -28,4 +29,5 @@
 @property (nonatomic, retain) IBOutlet UIRefreshControl *refreshControl;
 #pragma mark - id jsonObjects
 @property (nonatomic, retain) IBOutlet id jsonObjects;
+
 @end

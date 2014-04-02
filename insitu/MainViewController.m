@@ -70,8 +70,10 @@
     self.refreshControl = _refreshControl;
     /// Addsubview
     [self.collectionView addSubview: refreshControl];
-
+    
+    
 }
+
 -(void)addNewCells {
     [self.collectionView performBatchUpdates:^{
         int resultsSize = [self.photoList count];
@@ -115,6 +117,13 @@
  *
  */
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+/*
+ *
+ */
+- (void)menuViewControllerDidFinish:(MenuViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -350,7 +359,17 @@
 {
     return 1;
 }
-
+- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, NSData *data))completionBlock
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (!error) {
+            completionBlock(YES, data);
+        } else {
+            completionBlock(NO, nil);
+        }
+    }];
+}
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PintReuse" forIndexPath:indexPath];
@@ -374,7 +393,16 @@
     CGFloat height = fPrev.size.height;
     CGFloat width = fPrev.size.width;
     
-    UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
+    //UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
+    UIImageView* imageView = [[UIImageView alloc] init];
+                              
+    NSURL *url = [NSURL URLWithString: self.photoList[index]];
+    
+    [self downloadImageWithURL:url completionBlock:^(BOOL succeeded, NSData *data) {
+        if (succeeded) {
+            UIImageView* imageView = [[UIImageView alloc] initWithImage: [[UIImage alloc] initWithData:data]];
+        }
+    }];
     
     //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
     
@@ -457,5 +485,4 @@
     return cell;
     
 }
-
 @end

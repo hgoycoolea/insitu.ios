@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		106697E318EB6FA300053901 /* libchilkatIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106697E218EB6FA300053901 /* libchilkatIos.a */; };
+		106697E818EB769B00053901 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 106697E718EB769B00053901 /* MenuViewController.m */; };
 		10AEEFEB18E3933100706359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEA18E3933100706359 /* Foundation.framework */; };
 		10AEEFED18E3933100706359 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEC18E3933100706359 /* CoreGraphics.framework */; };
 		10AEEFEF18E3933100706359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEE18E3933100706359 /* UIKit.framework */; };
@@ -42,7 +44,6 @@
 		10AEF0AD18E4732100706359 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEF0AC18E4732100706359 /* libz.dylib */; };
 		10AEF0AF18E4738E00706359 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEF0AE18E4738E00706359 /* MapKit.framework */; };
 		10AEF0B118E4739600706359 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEF0B018E4739600706359 /* QuartzCore.framework */; };
-		10AEF0F718E476F000706359 /* libchilkatIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEF0F618E476F000706359 /* libchilkatIos.a */; };
 		10AEF0FA18E4782D00706359 /* ref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AEF0F818E4782D00706359 /* ref.cpp */; };
 		10AEF0FD18E478C000706359 /* SatelliteHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEF0FC18E478C000706359 /* SatelliteHelper.m */; };
 		10AEF10118E5FC9D00706359 /* PCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEF10018E5FC9D00706359 /* PCollectionViewLayout.m */; };
@@ -71,6 +72,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		106697E218EB6FA300053901 /* libchilkatIos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libchilkatIos.a; sourceTree = "<group>"; };
+		106697E618EB769B00053901 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		106697E718EB769B00053901 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		10AEEFE718E3933100706359 /* insitu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = insitu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10AEEFEA18E3933100706359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		10AEEFEC18E3933100706359 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -191,7 +195,6 @@
 		10AEF0F318E4752F00706359 /* CkoZipCrc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CkoZipCrc.h; sourceTree = "<group>"; };
 		10AEF0F418E4752F00706359 /* CkoZipEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CkoZipEntry.h; sourceTree = "<group>"; };
 		10AEF0F518E4752F00706359 /* CkoZipProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CkoZipProgress.h; sourceTree = "<group>"; };
-		10AEF0F618E476F000706359 /* libchilkatIos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libchilkatIos.a; sourceTree = "<group>"; };
 		10AEF0F818E4782D00706359 /* ref.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ref.cpp; sourceTree = "<group>"; };
 		10AEF0F918E4782D00706359 /* ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ref.h; sourceTree = "<group>"; };
 		10AEF0FB18E478C000706359 /* SatelliteHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatelliteHelper.h; sourceTree = "<group>"; };
@@ -220,6 +223,7 @@
 			files = (
 				10AEF0B118E4739600706359 /* QuartzCore.framework in Frameworks */,
 				10AEF0AF18E4738E00706359 /* MapKit.framework in Frameworks */,
+				106697E318EB6FA300053901 /* libchilkatIos.a in Frameworks */,
 				10AEF0A718E472F000706359 /* MobileCoreServices.framework in Frameworks */,
 				10AEF0A518E472E100706359 /* CoreData.framework in Frameworks */,
 				10AEF0A318E472CC00706359 /* SystemConfiguration.framework in Frameworks */,
@@ -231,7 +235,6 @@
 				10AEF0A918E4730600706359 /* libxml2.dylib in Frameworks */,
 				10AEF0AB18E4731600706359 /* libiconv.dylib in Frameworks */,
 				10AEF0AD18E4732100706359 /* libz.dylib in Frameworks */,
-				10AEF0F718E476F000706359 /* libchilkatIos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +279,7 @@
 		10AEEFE918E3933100706359 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				10AEF0F618E476F000706359 /* libchilkatIos.a */,
+				106697E218EB6FA300053901 /* libchilkatIos.a */,
 				10AEF0B018E4739600706359 /* QuartzCore.framework */,
 				10AEF0AE18E4738E00706359 /* MapKit.framework */,
 				10AEF0AC18E4732100706359 /* libz.dylib */,
@@ -309,6 +312,8 @@
 				10AEEFF118E3933100706359 /* Supporting Files */,
 				10AEF0F818E4782D00706359 /* ref.cpp */,
 				10AEF0F918E4782D00706359 /* ref.h */,
+				106697E618EB769B00053901 /* MenuViewController.h */,
+				106697E718EB769B00053901 /* MenuViewController.m */,
 			);
 			path = insitu;
 			sourceTree = "<group>";
@@ -605,6 +610,7 @@
 				10AEF07D18E46D8900706359 /* EncryptionHelper.m in Sources */,
 				10AEF09B18E46DAA00706359 /* ASIFormDataRequest.m in Sources */,
 				10AEF09A18E46DAA00706359 /* ASIDownloadCache.m in Sources */,
+				106697E818EB769B00053901 /* MenuViewController.m in Sources */,
 				10AEEFFB18E3933100706359 /* AppDelegate.m in Sources */,
 				10AEF09718E46DAA00706359 /* ASIAuthenticationDialog.m in Sources */,
 				10AEF09E18E46DAA00706359 /* ASINetworkQueue.m in Sources */,
@@ -755,7 +761,7 @@
 				INFOPLIST_FILE = "insitu/insitu-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/goycolea/Developer/Git/insitu.ios,
+					/Users/hgoycoolea/Developer/Git/insitu.ios,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -779,7 +785,7 @@
 				INFOPLIST_FILE = "insitu/insitu-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/goycolea/Developer/Git/insitu.ios,
+					/Users/hgoycoolea/Developer/Git/insitu.ios,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
