@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Twitter/Twitter.h>
+#import <Accounts/Accounts.h>
 
 @class FlipsideViewController;
 
@@ -14,7 +16,7 @@
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller;
 @end
 
-@interface FlipsideViewController : UIViewController
+@interface FlipsideViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) id <FlipsideViewControllerDelegate> delegate;
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FlipsideViewController.h"
 
 @class MenuViewController;
 
@@ -14,7 +15,7 @@
 - (void)menuViewControllerDidFinish:(MenuViewController *)controller;
 @end
 
-@interface MenuViewController : UIViewController
+@interface MenuViewController : UIViewController<FlipsideViewControllerDelegate>
 
 @property (strong, nonatomic) id <MenuViewControllerDelegate> delegate;
 
