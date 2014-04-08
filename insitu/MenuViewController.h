@@ -15,9 +15,12 @@
 - (void)menuViewControllerDidFinish:(MenuViewController *)controller;
 @end
 
-@interface MenuViewController : UIViewController<FlipsideViewControllerDelegate>
+@interface MenuViewController : UIViewController<FlipsideViewControllerDelegate>{
+    
+}
 
 @property (strong, nonatomic) id <MenuViewControllerDelegate> delegate;
+
 
 - (IBAction)done:(id)sender;
 

@@ -208,4 +208,79 @@
     }
     
 }
+-(NSString *) getMercantePorID: (NSString *)mercante{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/getMercantePorID"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_id = [rsa Encrypt:mercante];
+        //NSString *encr_alt = [rsa Encrypt:alt];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_id forKey:@"__id"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+
+}
+-(NSString *) readMercantesPorMembresias: (NSString *)membresias{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/readMercantesPorMembresia.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_m = [rsa Encrypt:membresias];
+        //NSString *encr_alt = [rsa Encrypt:alt];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_m forKey:@"__m"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+
+}
+-(NSString *) readBarriosPorCiudad: (NSString *)ciudad{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/readBarriosPorCiudad"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// we encrypt the data to send it
+        NSString *encr_c = [rsa Encrypt:ciudad];
+        //NSString *encr_alt = [rsa Encrypt:alt];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_c forKey:@"__c"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+
+}
 @end

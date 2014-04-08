@@ -7,6 +7,7 @@
 //
 
 #import "MenuViewController.h"
+#import "SatelliteHelper.h"
 
 @interface MenuViewController ()
 
@@ -17,11 +18,15 @@
 
 @implementation MenuViewController
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self loadUserInfo];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,4 +82,7 @@
         self.img_user.layer.borderWidth = 3.0;
     }
 }
+
+
+
 @end

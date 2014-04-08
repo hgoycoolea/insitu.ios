@@ -28,6 +28,10 @@
 		1075B69418F1039300E23627 /* 1396649795_info.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B69318F1039300E23627 /* 1396649795_info.png */; };
 		1075B69618F1045000E23627 /* 1396649832_magnifying_glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B69518F1045000E23627 /* 1396649832_magnifying_glass.png */; };
 		1075B69A18F1063C00E23627 /* demo1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B69918F1063C00E23627 /* demo1.png */; };
+		1075B69C18F3805700E23627 /* btn_info_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B69B18F3805700E23627 /* btn_info_white.png */; };
+		1075B69F18F3832900E23627 /* MerchantInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075B69E18F3832900E23627 /* MerchantInfoViewController.m */; };
+		1075B6A218F38C5600E23627 /* btn_follow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B6A018F38C5600E23627 /* btn_follow.png */; };
+		1075B6A318F38C5600E23627 /* btn_following.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B6A118F38C5600E23627 /* btn_following.png */; };
 		10AEEFEB18E3933100706359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEA18E3933100706359 /* Foundation.framework */; };
 		10AEEFED18E3933100706359 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEC18E3933100706359 /* CoreGraphics.framework */; };
 		10AEEFEF18E3933100706359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEE18E3933100706359 /* UIKit.framework */; };
@@ -135,6 +139,11 @@
 		1075B69318F1039300E23627 /* 1396649795_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1396649795_info.png; sourceTree = "<group>"; };
 		1075B69518F1045000E23627 /* 1396649832_magnifying_glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1396649832_magnifying_glass.png; sourceTree = "<group>"; };
 		1075B69918F1063C00E23627 /* demo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demo1.png; sourceTree = "<group>"; };
+		1075B69B18F3805700E23627 /* btn_info_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_info_white.png; sourceTree = "<group>"; };
+		1075B69D18F3832900E23627 /* MerchantInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantInfoViewController.h; sourceTree = "<group>"; };
+		1075B69E18F3832900E23627 /* MerchantInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantInfoViewController.m; sourceTree = "<group>"; };
+		1075B6A018F38C5600E23627 /* btn_follow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_follow.png; sourceTree = "<group>"; };
+		1075B6A118F38C5600E23627 /* btn_following.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_following.png; sourceTree = "<group>"; };
 		10AEEFE718E3933100706359 /* insitu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = insitu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10AEEFEA18E3933100706359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		10AEEFEC18E3933100706359 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -403,6 +412,8 @@
 				106697E718EB769B00053901 /* MenuViewController.m */,
 				1075B68618F0A85500E23627 /* WallViewController.h */,
 				1075B68718F0A85500E23627 /* WallViewController.m */,
+				1075B69D18F3832900E23627 /* MerchantInfoViewController.h */,
+				1075B69E18F3832900E23627 /* MerchantInfoViewController.m */,
 			);
 			path = insitu;
 			sourceTree = "<group>";
@@ -569,6 +580,9 @@
 		51CFBB4C18EB47A800552C64 /* Artwork */ = {
 			isa = PBXGroup;
 			children = (
+				1075B6A018F38C5600E23627 /* btn_follow.png */,
+				1075B6A118F38C5600E23627 /* btn_following.png */,
+				1075B69B18F3805700E23627 /* btn_info_white.png */,
 				1075B69918F1063C00E23627 /* demo1.png */,
 				1075B69518F1045000E23627 /* 1396649832_magnifying_glass.png */,
 				1075B69318F1039300E23627 /* 1396649795_info.png */,
@@ -709,6 +723,7 @@
 				51E68D8018E9EA4D00AD09E3 /* 1396308239_calendar_alt_fill.png in Resources */,
 				1075B67D18F09E7700E23627 /* btn_user_white.png in Resources */,
 				10CBBC1318EF3C74000E7C23 /* btn_back_absolute.png in Resources */,
+				1075B69C18F3805700E23627 /* btn_info_white.png in Resources */,
 				10CBBBFB18EF28C1000E7C23 /* btn_info.png in Resources */,
 				10CBBC1518EF3F48000E7C23 /* btn_top_menu.png in Resources */,
 				1075B69618F1045000E23627 /* 1396649832_magnifying_glass.png in Resources */,
@@ -741,8 +756,10 @@
 				51E68D8418E9EB6700AD09E3 /* 1396308511_tag_fill.png in Resources */,
 				10CBBC0318EF321B000E7C23 /* back.png in Resources */,
 				10CBBC1718EF40FF000E7C23 /* btn_home_white.png in Resources */,
+				1075B6A218F38C5600E23627 /* btn_follow.png in Resources */,
 				10CBBBF118EF2461000E7C23 /* btn_promociones.png in Resources */,
 				51E68D8218E9EAF800AD09E3 /* 1396308420_chart_alt.png in Resources */,
+				1075B6A318F38C5600E23627 /* btn_following.png in Resources */,
 				1075B69A18F1063C00E23627 /* demo1.png in Resources */,
 				51E68D7C18E9E6C000AD09E3 /* 1396307328_pin.png in Resources */,
 				51E68D7418E9239700AD09E3 /* 1396257354_cog.png in Resources */,
@@ -771,6 +788,7 @@
 				10AEF07D18E46D8900706359 /* EncryptionHelper.m in Sources */,
 				10AEF09B18E46DAA00706359 /* ASIFormDataRequest.m in Sources */,
 				10AEF09A18E46DAA00706359 /* ASIDownloadCache.m in Sources */,
+				1075B69F18F3832900E23627 /* MerchantInfoViewController.m in Sources */,
 				106697E818EB769B00053901 /* MenuViewController.m in Sources */,
 				10AEEFFB18E3933100706359 /* AppDelegate.m in Sources */,
 				10AEF09718E46DAA00706359 /* ASIAuthenticationDialog.m in Sources */,

@@ -9,7 +9,17 @@
 #include "SatelliteHelper.h"
 
 @interface MainViewController ()
+/// propertie de las imagenes de cada mercante
+@property (strong,nonatomic) NSMutableArray* avatarList;
+/// id de cada uno de los mercantes
+@property (strong,nonatomic) NSMutableArray* idsList;
+/// imagen del home de cada
+@property (strong,nonatomic) NSMutableArray* homeList;
 
+@property (strong,nonatomic) NSMutableArray *vistas;
+
+@property (strong, nonatomic) IBOutlet UIImageView *barra_top;
+@property (strong, nonatomic) IBOutlet UIImageView *barra_down;
 @end
 
 
@@ -17,6 +27,10 @@
 
 @synthesize locationManager;
 @synthesize refreshControl;
+@synthesize jsonObjects;
+@synthesize pageControl;
+@synthesize ui_slides;
+@synthesize barra_down, barra_top;
 /*
  *
  */
@@ -33,7 +47,139 @@
         [[NSRunLoop currentRunLoop] run];
     });
     
+    [self downloadMercantesMembresiasPagadas];
+    // Call changePage each time value of pageControl changes
+    [self.pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedRightButton:)];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view addGestureRecognizer:swipeLeft];
+    
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedLeftButton:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:swipeRight];
+    
+    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedUpButton:)];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [self.view addGestureRecognizer:swipeUp];
+    
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDownButton:)];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [self.view addGestureRecognizer:swipeDown];
+
+}
+
+- (IBAction)infoForMechant:(id)sender{
+    
+}
+
+- (IBAction)tappedUpButton:(id)sender
+{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.7f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    transition.type = kCATransitionFade;
+    
+    [barra_top.layer addAnimation:transition forKey:nil];
+    [barra_down.layer addAnimation:transition forKey:nil];
+    
+    barra_top.hidden = YES;
+    barra_down.hidden = YES;
+}
+
+- (IBAction)tappedDownButton:(id)sender
+{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.7f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    transition.type = kCATransitionFade;
+    
+    [barra_top.layer addAnimation:transition forKey:nil];
+    [barra_down.layer addAnimation:transition forKey:nil];
+    
+    barra_top.hidden = NO;
+    barra_down.hidden = NO;
+}
+
+- (IBAction)tappedRightButton:(id)sender
+{
+    int pageToGo = [self.pageControl currentPage] - 1;
+    if(pageToGo>=0){
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 1.0f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type = kCATransitionFade;
+        
+        [self.ui_slides.layer addAnimation:transition forKey:nil];
+        
+    self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
+    self.pageControl.currentPage = pageToGo;
+    }
+}
+
+- (IBAction)tappedLeftButton:(id)sender
+{
+    int pageToGo = [self.pageControl currentPage] + 1;
+    if(pageToGo>=0){
+        CATransition *transition = [CATransition animation];
+        transition.duration = 1.0f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type = kCATransitionFade;
+        
+        [self.ui_slides.layer addAnimation:transition forKey:nil];
+        
+    self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
+    self.pageControl.currentPage = pageToGo;
+    }
+}
+
+- (IBAction) changePage:(id)sender {
+    self.ui_slides.image =[self.vistas objectAtIndex:[self.pageControl currentPage]];
+}
+
+
+- (void)downloadMercantesMembresiasPagadas {
+    // make up some test data
+    self.avatarList = [NSMutableArray arrayWithCapacity:1];
+    self.idsList = [NSMutableArray arrayWithCapacity:1];
+    self.homeList = [NSMutableArray arrayWithCapacity:1];
+    // Set up the views array with 3 UIImageViews
+    self.vistas = [NSMutableArray arrayWithCapacity:1];
+    /// we initialize the helper
+    SatelliteHelper *helper = [[SatelliteHelper alloc] init];
+    /// this will show me the response
+    NSString *response = [helper readMercantesPorMembresias:@"1,2,3"];
+    /// let's configure the data
+    NSData* data=[response dataUsingEncoding: [NSString defaultCStringEncoding] ];
+    /// error for the json objects
+    NSError *error = nil;
+    /// now we get an array of the all json file
+    jsonObjects = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    int count = 0;
+    /// let's loop foreach on the statement
+    for(NSDictionary *keys in jsonObjects){
+        NSString *_id = [keys objectForKey:@"ID"];
+        NSString *avatar = [keys objectForKey:@"UrlImageLogo"];
+        NSString *img_home = [keys objectForKey:@"UrlImageHome"];
+        /// we add the promotion
+        [self.avatarList addObject:avatar];
+        [self.idsList addObject:_id];
+        [self.homeList addObject:img_home];
+        /// let's make a circle of the avatar for the company
+        UIImage *imagesHome = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:img_home]]];
+        if(imagesHome!=nil){
+            [self.vistas addObject:imagesHome];
+            count++;
+        }
+    }
+    /// first image load
+    self.ui_slides.image =[self.vistas objectAtIndex:0];
+    /// we set the pages with the images that we have
+    self.pageControl.numberOfPages = count;
+    self.pageControl.currentPage = 0;
+    /// response to the log
+    NSLog(@"%@",response);
 }
 /*
  *
@@ -62,6 +208,11 @@
  *
  */
 - (void)wallViewControllerDidFinish:(WallViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+///
+- (void)merchantInfoViewControllerDidFinish:(MerchantInfoViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
