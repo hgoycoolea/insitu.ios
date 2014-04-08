@@ -380,6 +380,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="zNv-ev-WK1" id="gpX-oe-78V"/>
+                        <outlet property="img_mercante" destination="m36-xJ-vSx" id="pMf-bt-OyT"/>
+                        <outlet property="nombre_tienda" destination="7Mn-O5-VEt" id="JV2-vW-pxJ"/>
+                        <outlet property="telefono" destination="3PF-4C-NUx" id="siF-ME-7RA"/>
+                        <outlet property="website" destination="caY-gJ-m1k" id="bxF-eK-Rvy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bOX-0e-Xdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

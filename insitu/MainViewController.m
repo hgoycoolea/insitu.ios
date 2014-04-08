@@ -113,8 +113,16 @@
         
         [self.ui_slides.layer addAnimation:transition forKey:nil];
         
-    self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
-    self.pageControl.currentPage = pageToGo;
+        self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
+        self.pageControl.currentPage = pageToGo;
+        
+        /// NSUserDefaults
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        /// card holder number
+        [prefs setObject:[self.idsList objectAtIndex:pageToGo] forKey:@"id_merchant_selected"];
+        /// we syncrho the preferences
+        [prefs synchronize];
+
     }
 }
 
@@ -129,8 +137,15 @@
         
         [self.ui_slides.layer addAnimation:transition forKey:nil];
         
-    self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
-    self.pageControl.currentPage = pageToGo;
+        self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
+        self.pageControl.currentPage = pageToGo;
+        
+        /// NSUserDefaults
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        /// card holder number
+        [prefs setObject:[self.idsList objectAtIndex:pageToGo] forKey:@"id_merchant_selected"];
+        /// we syncrho the preferences
+        [prefs synchronize];
     }
 }
 
@@ -162,13 +177,14 @@
         NSString *_id = [keys objectForKey:@"ID"];
         NSString *avatar = [keys objectForKey:@"UrlImageLogo"];
         NSString *img_home = [keys objectForKey:@"UrlImageHome"];
-        /// we add the promotion
-        [self.avatarList addObject:avatar];
-        [self.idsList addObject:_id];
-        [self.homeList addObject:img_home];
+        
         /// let's make a circle of the avatar for the company
         UIImage *imagesHome = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:img_home]]];
         if(imagesHome!=nil){
+            /// we add the promotion
+            [self.avatarList addObject:avatar];
+            [self.idsList addObject:_id];
+            [self.homeList addObject:img_home];
             [self.vistas addObject:imagesHome];
             count++;
         }
@@ -178,6 +194,13 @@
     /// we set the pages with the images that we have
     self.pageControl.numberOfPages = count;
     self.pageControl.currentPage = 0;
+    /// NSUserDefaults
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    /// card holder number
+    [prefs setObject:[self.idsList objectAtIndex:0] forKey:@"id_merchant_selected"];
+    /// we syncrho the preferences
+    [prefs synchronize];
+
     /// response to the log
     NSLog(@"%@",response);
 }

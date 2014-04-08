@@ -118,6 +118,33 @@
     
 }
 
+-(NSString *) readPromocionesPorMercante: (NSString *)mercante
+{
+    @try {
+        /// url for the request
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/ReadPromocionesPorMercante.ashx"];
+        /// encryption helper in action allocation of memmory
+        EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
+        /// client encription
+        NSString *encr_c = [rsa Encrypt:[NSString stringWithFormat:@"%@",mercante]];
+        //NSString *encr_alt = [rsa Encrypt:alt];
+        /// now a new request
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:encr_c forKey:@"__m"];
+        [request setDelegate:self];
+        [request startSynchronous];
+        /// this gets the response from the server
+        NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        /// we return the response
+        return response;
+    }
+    @catch (NSException *exception) {
+        /// we return the nack to the user
+        return @"NACK";
+    }
+    
+}
+
 -(NSString *) readPromocionesPorGeolocation: (NSString *)lat Longitude:(NSString *)lon Tolerance:(NSString *)tolerance Barrio:(NSString *)barrio
 {
     @try {
@@ -211,11 +238,11 @@
 -(NSString *) getMercantePorID: (NSString *)mercante{
     @try {
         /// url for the request
-        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/getMercantePorID"];
+        NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/getMercantePorID.ashx"];
         /// encryption helper in action allocation of memmory
         EncryptionHelper *rsa = [[EncryptionHelper alloc] init];
         /// we encrypt the data to send it
-        NSString *encr_id = [rsa Encrypt:mercante];
+        NSString *encr_id = [rsa Encrypt:[NSString stringWithFormat:@"%@",mercante]];
         //NSString *encr_alt = [rsa Encrypt:alt];
         /// now a new request
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];

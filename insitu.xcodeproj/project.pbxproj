@@ -32,6 +32,7 @@
 		1075B69F18F3832900E23627 /* MerchantInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075B69E18F3832900E23627 /* MerchantInfoViewController.m */; };
 		1075B6A218F38C5600E23627 /* btn_follow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B6A018F38C5600E23627 /* btn_follow.png */; };
 		1075B6A318F38C5600E23627 /* btn_following.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B6A118F38C5600E23627 /* btn_following.png */; };
+		1075B6A518F4910B00E23627 /* btn_buynow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B6A418F4910B00E23627 /* btn_buynow.png */; };
 		10AEEFEB18E3933100706359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEA18E3933100706359 /* Foundation.framework */; };
 		10AEEFED18E3933100706359 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEC18E3933100706359 /* CoreGraphics.framework */; };
 		10AEEFEF18E3933100706359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10AEEFEE18E3933100706359 /* UIKit.framework */; };
@@ -144,6 +145,7 @@
 		1075B69E18F3832900E23627 /* MerchantInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantInfoViewController.m; sourceTree = "<group>"; };
 		1075B6A018F38C5600E23627 /* btn_follow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_follow.png; sourceTree = "<group>"; };
 		1075B6A118F38C5600E23627 /* btn_following.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_following.png; sourceTree = "<group>"; };
+		1075B6A418F4910B00E23627 /* btn_buynow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_buynow.png; sourceTree = "<group>"; };
 		10AEEFE718E3933100706359 /* insitu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = insitu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10AEEFEA18E3933100706359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		10AEEFEC18E3933100706359 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -580,6 +582,7 @@
 		51CFBB4C18EB47A800552C64 /* Artwork */ = {
 			isa = PBXGroup;
 			children = (
+				1075B6A418F4910B00E23627 /* btn_buynow.png */,
 				1075B6A018F38C5600E23627 /* btn_follow.png */,
 				1075B6A118F38C5600E23627 /* btn_following.png */,
 				1075B69B18F3805700E23627 /* btn_info_white.png */,
@@ -735,6 +738,7 @@
 				10AEF00618E3933200706359 /* Images.xcassets in Resources */,
 				10CBBC2118EF4E89000E7C23 /* btn_new_logo_izq.png in Resources */,
 				10CBBC0718EF35D5000E7C23 /* btn_back.png in Resources */,
+				1075B6A518F4910B00E23627 /* btn_buynow.png in Resources */,
 				1075B67B18F09AFF00E23627 /* active_404.png in Resources */,
 				1075B68518F0A71700E23627 /* top_favs_banner.png in Resources */,
 				1075B68118F0A70100E23627 /* perfil_insitu.png in Resources */,
