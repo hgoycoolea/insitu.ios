@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		106697E318EB6FA300053901 /* libchilkatIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106697E218EB6FA300053901 /* libchilkatIos.a */; };
 		106697E818EB769B00053901 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 106697E718EB769B00053901 /* MenuViewController.m */; };
 		1075B67318F068A300E23627 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1075B67218F068A300E23627 /* Twitter.framework */; };
 		1075B67518F0691500E23627 /* sign-in-with-twitter-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1075B67418F0691500E23627 /* sign-in-with-twitter-gray.png */; };
@@ -94,6 +93,8 @@
 		10CBBC1D18EF4524000E7C23 /* banner_top_plain.png in Resources */ = {isa = PBXBuildFile; fileRef = 10CBBC1C18EF4524000E7C23 /* banner_top_plain.png */; };
 		10CBBC1F18EF461E000E7C23 /* btn_search_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 10CBBC1E18EF461E000E7C23 /* btn_search_white.png */; };
 		10CBBC2118EF4E89000E7C23 /* btn_new_logo_izq.png in Resources */ = {isa = PBXBuildFile; fileRef = 10CBBC2018EF4E89000E7C23 /* btn_new_logo_izq.png */; };
+		515E359B18F85DE400858B3D /* GPSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 515E359A18F85DE400858B3D /* GPSManager.m */; };
+		515E359F18F862C200858B3D /* libchilkatIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515E359E18F862C200858B3D /* libchilkatIos.a */; };
 		51E68D7218E9218E00AD09E3 /* 1396256767_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E68D7118E9218E00AD09E3 /* 1396256767_list.png */; };
 		51E68D7418E9239700AD09E3 /* 1396257354_cog.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E68D7318E9239700AD09E3 /* 1396257354_cog.png */; };
 		51E68D7818E9D96A00AD09E3 /* splitImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E68D7718E9D96A00AD09E3 /* splitImage.png */; };
@@ -117,7 +118,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		106697E218EB6FA300053901 /* libchilkatIos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libchilkatIos.a; sourceTree = "<group>"; };
 		106697E618EB769B00053901 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		106697E718EB769B00053901 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		1075B67218F068A300E23627 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
@@ -296,6 +296,9 @@
 		10CBBC1C18EF4524000E7C23 /* banner_top_plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner_top_plain.png; sourceTree = "<group>"; };
 		10CBBC1E18EF461E000E7C23 /* btn_search_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_search_white.png; sourceTree = "<group>"; };
 		10CBBC2018EF4E89000E7C23 /* btn_new_logo_izq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_new_logo_izq.png; sourceTree = "<group>"; };
+		515E359918F85DE400858B3D /* GPSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSManager.h; sourceTree = "<group>"; };
+		515E359A18F85DE400858B3D /* GPSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSManager.m; sourceTree = "<group>"; };
+		515E359E18F862C200858B3D /* libchilkatIos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libchilkatIos.a; sourceTree = "<group>"; };
 		51E68D7118E9218E00AD09E3 /* 1396256767_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1396256767_list.png; sourceTree = "<group>"; };
 		51E68D7318E9239700AD09E3 /* 1396257354_cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1396257354_cog.png; sourceTree = "<group>"; };
 		51E68D7718E9D96A00AD09E3 /* splitImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splitImage.png; sourceTree = "<group>"; };
@@ -317,8 +320,8 @@
 				1075B67718F06F0C00E23627 /* Accounts.framework in Frameworks */,
 				1075B67318F068A300E23627 /* Twitter.framework in Frameworks */,
 				10AEF0B118E4739600706359 /* QuartzCore.framework in Frameworks */,
+				515E359F18F862C200858B3D /* libchilkatIos.a in Frameworks */,
 				10AEF0AF18E4738E00706359 /* MapKit.framework in Frameworks */,
-				106697E318EB6FA300053901 /* libchilkatIos.a in Frameworks */,
 				10AEF0A718E472F000706359 /* MobileCoreServices.framework in Frameworks */,
 				10AEF0A518E472E100706359 /* CoreData.framework in Frameworks */,
 				10AEF0A318E472CC00706359 /* SystemConfiguration.framework in Frameworks */,
@@ -349,6 +352,7 @@
 		10AEEFDE18E3933100706359 = {
 			isa = PBXGroup;
 			children = (
+				515E359E18F862C200858B3D /* libchilkatIos.a */,
 				51CFBB4C18EB47A800552C64 /* Artwork */,
 				10AEF0FE18E5FC5D00706359 /* PCollectionView */,
 				10AEF0B418E4752F00706359 /* include */,
@@ -377,7 +381,6 @@
 				1075B67818F088C800E23627 /* Social.framework */,
 				1075B67618F06F0C00E23627 /* Accounts.framework */,
 				1075B67218F068A300E23627 /* Twitter.framework */,
-				106697E218EB6FA300053901 /* libchilkatIos.a */,
 				10AEF0B018E4739600706359 /* QuartzCore.framework */,
 				10AEF0AE18E4738E00706359 /* MapKit.framework */,
 				10AEF0AC18E4732100706359 /* libz.dylib */,
@@ -454,6 +457,8 @@
 			children = (
 				10AEF0FB18E478C000706359 /* SatelliteHelper.h */,
 				10AEF0FC18E478C000706359 /* SatelliteHelper.m */,
+				515E359918F85DE400858B3D /* GPSManager.h */,
+				515E359A18F85DE400858B3D /* GPSManager.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -802,6 +807,7 @@
 				10AEF00418E3933200706359 /* FlipsideViewController.m in Sources */,
 				10AEF09918E46DAA00706359 /* ASIDataDecompressor.m in Sources */,
 				10AEF09D18E46DAA00706359 /* ASIInputStream.m in Sources */,
+				515E359B18F85DE400858B3D /* GPSManager.m in Sources */,
 				10AEF09C18E46DAA00706359 /* ASIHTTPRequest.m in Sources */,
 				10AEEFF718E3933100706359 /* main.m in Sources */,
 				10AEF0FD18E478C000706359 /* SatelliteHelper.m in Sources */,
@@ -892,6 +898,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = /Users/goycolea/Developer/Git/insitu.ios/;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -925,6 +932,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = /Users/goycolea/Developer/Git/insitu.ios/;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -946,6 +954,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/hgoycoolea/Developer/Git/insitu.ios,
+					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -970,6 +979,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/hgoycoolea/Developer/Git/insitu.ios,
+					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

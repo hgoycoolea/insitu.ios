@@ -7,6 +7,7 @@
 //
 #import "MainViewController.h"
 #include "SatelliteHelper.h"
+#include "GPSManager.h"
 
 @interface MainViewController ()
 /// propertie de las imagenes de cada mercante
@@ -39,15 +40,18 @@
     [super viewDidLoad];
     
     // Start the long-running task and return immediately.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         
         // Do the work associated with the task, preferably in chunks.
         NSTimer* t = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(InitializeCLControler) userInfo:nil repeats:YES];
         [[NSRunLoop currentRunLoop] addTimer:t forMode:NSDefaultRunLoopMode];
         [[NSRunLoop currentRunLoop] run];
+        
+        
     });
     
     [self downloadMercantesMembresiasPagadas];
+    
     // Call changePage each time value of pageControl changes
     [self.pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     
@@ -103,7 +107,7 @@
 
 - (IBAction)tappedRightButton:(id)sender
 {
-    int pageToGo = [self.pageControl currentPage] - 1;
+    int pageToGo = [self.pageControl currentPage] + 1;
     if(pageToGo>=0){
         
         CATransition *transition = [CATransition animation];
@@ -128,7 +132,7 @@
 
 - (IBAction)tappedLeftButton:(id)sender
 {
-    int pageToGo = [self.pageControl currentPage] + 1;
+    int pageToGo = [self.pageControl currentPage] - 1;
     if(pageToGo>=0){
         CATransition *transition = [CATransition animation];
         transition.duration = 1.0f;
@@ -307,5 +311,6 @@
     NSString *response = [helper acknowledgeRutas:lat Longitude:lon Speed:speed Altitude:alt Client:client];
     /// response to the log
     NSLog(@"%@",response);
+    
 }
 @end

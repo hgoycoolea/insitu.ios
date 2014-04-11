@@ -8,6 +8,7 @@
 #import "SatelliteHelper.h"
 #include "ASIFormDataRequest.h"
 #import "EncryptionHelper.h"
+#include "GPSManager.h"
 
 @implementation SatelliteHelper
 /*
@@ -23,6 +24,29 @@
 -(NSString *) acknowledgeRutas: (NSString *)lat Longitude:(NSString *)lon Speed:(NSString *)speed Altitude:(NSString *)alt Client:(NSString *) client
 {
     @try {
+        /// this will bring the singleton to our instance
+        GPSManager *singletonGPS = [GPSManager sharedManager];
+        /// we now set the variables to the pointers
+        NSString *sLat = singletonGPS.lat;
+        NSString *sLong = singletonGPS.lon;
+        NSString *sAlt = singletonGPS.alt;
+        NSString *sSpeed = singletonGPS.speed;
+        
+        float fLat = [sLat floatValue];
+        float flon = [sLong floatValue];
+        float cflat = [lat floatValue];
+        float cflon = [lon floatValue];
+        
+        float distance_lat = fLat - cflat;
+        float distance_long = flon - cflon;
+        /// with this we make sure that the gps only updates if is necesary
+        if(distance_lat > 0 || distance_long > 0){
+            /// we now set the variables to the singleton
+            singletonGPS.lon = lon;
+            singletonGPS.lat = lat;
+            singletonGPS.alt = alt;
+            singletonGPS.speed = speed;
+
         /// url for the request
         NSURL *url = [NSURL URLWithString:@"http://bus.insituapps.com/AcknowledgeRutas.ashx"];
         /// encryption helper in action allocation of memmory
@@ -44,8 +68,11 @@
         [request startSynchronous];
         /// this gets the response from the server
         NSString *response = [[request responseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        /// we return the response
-        return response;
+            /// we return the response
+            return response;
+        }else{
+            return @"";
+        }
     }
     @catch (NSException *exception) {
         /// we return the nack to the user
