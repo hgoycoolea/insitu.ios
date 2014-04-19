@@ -369,6 +369,10 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="XyK-kK-BAY" id="UCg-wj-b80"/>
+                                    <outlet property="delegate" destination="XyK-kK-BAY" id="cQK-Kg-ojf"/>
+                                </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ks3-Sd-vyL">
                                 <rect key="frame" x="11" y="204" width="300" height="40"/>
@@ -591,13 +595,17 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="c7g-R8-AEL" id="Fag-MJ-4N3"/>
+                                    <outlet property="delegate" destination="c7g-R8-AEL" id="dFX-Fg-e4W"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="biogragia" destination="svb-EJ-qhk" id="FCl-0A-qde"/>
-                        <outlet property="collectionView" destination="fuh-U1-wuH" id="7AD-5z-mTA"/>
+                        <outlet property="collectionView" destination="fuh-U1-wuH" id="TJG-aC-kcp"/>
                         <outlet property="img_user" destination="85Z-oG-A7b" id="yfe-rK-NVf"/>
                         <outlet property="location" destination="Ayc-Vb-LX8" id="8ag-Wg-8mA"/>
                         <outlet property="nombre_social" destination="rC1-ml-LZB" id="6Xv-kn-KES"/>

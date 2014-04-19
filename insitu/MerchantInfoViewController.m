@@ -42,13 +42,9 @@
 @synthesize locationManager;
 
 -(void)viewDidAppear:(BOOL)animated{
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-                       [self.collectionView reloadData];
-                   });
+    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+    [self.collectionView reloadData];
 }
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,26 +60,19 @@
     [super viewDidLoad];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
     NSString *id_merchant_selected = [prefs objectForKey:@"id_merchant_selected"];
     [prefs autorelease];
-
     // set up delegates
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.view addSubview:self.collectionView];
-    
     // set inter-item spacing in the layout
     PCollectionViewLayout* customLayout = (PCollectionViewLayout*)self.collectionView.collectionViewLayout;
     customLayout.interitemSpacing = 14.0;
-    
+    /// Do any additional setup after loading the view.
+    [self downloadInfoMercante : id_merchant_selected];
+    ///
     [self downloadPromocionesMercante:id_merchant_selected];
-    // Start the long-running task and return immediately.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // Do any additional setup after loading the view.
-        [self downloadInfoMercante : id_merchant_selected];
-        
-    });
     /// Refresh Control for the UITabletView
     UIRefreshControl *_refreshControl = [[UIRefreshControl alloc] init];
     _refreshControl.tintColor = [UIColor blackColor];
@@ -91,6 +80,8 @@
     self.refreshControl = _refreshControl;
     /// Addsubview
     [self.collectionView addSubview: refreshControl];
+    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,30 +93,6 @@
 - (IBAction)done:(id)sender
 {
     [self.delegate merchantInfoViewControllerDidFinish:self];
-}
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-/**/
-
--(void)addNewCells {
-    [self.collectionView performBatchUpdates:^{
-        int resultsSize = [self.photoList count];
-        [self.photoList addObjectsFromArray:self.photoList];
-        NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
-        for (int i = resultsSize; i < resultsSize + self.photoList.count; i++){
-            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
-        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
-    }    completion:nil];
 }
 /// -(void)reRenderCoupons
 -(void)reRender
@@ -253,24 +220,11 @@
     
     [self createFileList:datasource];
     /// response to the log
-    NSLog(@"%@",response);
+    //NSLog(@"%@",response);
 }
 
 #pragma mark - Target Actions
 
-
-
-- (IBAction)onAddCell
-{
-    [self.photoList addObject:@"egret.png"];
-    
-    NSUInteger newNumCells = [self.photoList count];
-    NSIndexPath* newIndexPath = [NSIndexPath indexPathForItem:newNumCells - 1
-                                                    inSection:0];
-    [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
-    
-    [self.collectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-}
 
 - (void)createFileList:(NSArray *)items
 {
@@ -331,12 +285,7 @@
         [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
     }
 }
-
-
-
 #pragma mark = UICollectionViewDataSource
-
-
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -371,8 +320,7 @@
     CGFloat height = fPrev.size.height;
     CGFloat width = fPrev.size.width;
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    dispatch_async(queue, ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
         dispatch_sync(dispatch_get_main_queue(), ^{
             /// when finished what it does

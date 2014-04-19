@@ -39,6 +39,7 @@
 {
     [super viewDidLoad];
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     // Start the long-running task and return immediately.
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -48,6 +49,7 @@
         [[NSRunLoop currentRunLoop] run];
         
         
+    });
     });
     
     [self downloadMercantesMembresiasPagadas];
@@ -309,8 +311,11 @@
     NSString *client = @"1";
     /// this will show me the response
     NSString *response = [helper acknowledgeRutas:lat Longitude:lon Speed:speed Altitude:alt Client:client];
+    /// we set debuger msg
+    if(response!=nil){
     /// response to the log
     NSLog(@"%@",response);
+    }
     
 }
 @end

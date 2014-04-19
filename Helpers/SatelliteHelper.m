@@ -40,7 +40,7 @@
         float distance_lat = fLat - cflat;
         float distance_long = flon - cflon;
         /// with this we make sure that the gps only updates if is necesary
-        if(distance_lat > 0 || distance_long > 0){
+        if(distance_lat > 10 || distance_long > 10){
             /// we now set the variables to the singleton
             singletonGPS.lon = lon;
             singletonGPS.lat = lat;
@@ -71,7 +71,7 @@
             /// we return the response
             return response;
         }else{
-            return @"";
+            return nil;
         }
     }
     @catch (NSException *exception) {
