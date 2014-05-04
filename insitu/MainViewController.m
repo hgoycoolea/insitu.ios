@@ -9,95 +9,200 @@
 #include "SatelliteHelper.h"
 
 @interface MainViewController ()
-@property (strong,nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong,nonatomic) NSMutableArray* photoList;
-@property (strong,nonatomic) NSMutableArray* contentList;
+/// propertie de las imagenes de cada mercante
+@property (strong,nonatomic) NSMutableArray* avatarList;
+/// id de cada uno de los mercantes
+@property (strong,nonatomic) NSMutableArray* idsList;
+/// imagen del home de cada
+@property (strong,nonatomic) NSMutableArray* homeList;
+
+@property (strong,nonatomic) NSMutableArray *vistas;
+
+@property (strong, nonatomic) IBOutlet UIImageView *barra_top;
+@property (strong, nonatomic) IBOutlet UIImageView *barra_down;
 @end
 
-#define kCollectionCellBorderTop 0
-#define kCollectionCellBorderBottom 8.0
-#define kCollectionCellBorderLeft 2
-#define kCollectionCellBorderRight 2
 
 @implementation MainViewController
 
 @synthesize locationManager;
 @synthesize refreshControl;
 @synthesize jsonObjects;
-
--(void)viewDidAppear:(BOOL)animated{
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-                       [self.collectionView reloadData];
-                   });
-}
+@synthesize pageControl;
+@synthesize ui_slides;
+@synthesize barra_down, barra_top;
 /*
  *
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self InitializeCLControler];
-    /// we download the categories
-    [self downloadPromocionesCategorias];
-    
-    // set up delegates
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    [self.view addSubview:self.collectionView];
-    
-    // set inter-item spacing in the layout
-    PCollectionViewLayout* customLayout = (PCollectionViewLayout*)self.collectionView.collectionViewLayout;
-    customLayout.interitemSpacing = 14.0;
-    
     
     // Start the long-running task and return immediately.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // Do the work associated with the task, preferably in chunks.
-        NSTimer* t = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(InitializeCLControler) userInfo:nil repeats:YES];
+        NSTimer* t = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(InitializeCLControler) userInfo:nil repeats:YES];
         [[NSRunLoop currentRunLoop] addTimer:t forMode:NSDefaultRunLoopMode];
         [[NSRunLoop currentRunLoop] run];
     });
-    /// Refresh Control for the UITabletView
-    UIRefreshControl *_refreshControl = [[UIRefreshControl alloc] init];
-    _refreshControl.tintColor = [UIColor blackColor];
-    [_refreshControl addTarget:self action:@selector(reRender) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = _refreshControl;
-    /// Addsubview
-    [self.collectionView addSubview: refreshControl];
+    
+    [self downloadMercantesMembresiasPagadas];
+    // Call changePage each time value of pageControl changes
+    [self.pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
+    
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedRightButton:)];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view addGestureRecognizer:swipeLeft];
+    
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedLeftButton:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:swipeRight];
+    
+    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedUpButton:)];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [self.view addGestureRecognizer:swipeUp];
+    
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(tappedDownButton:)];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [self.view addGestureRecognizer:swipeDown];
 
 }
--(void)addNewCells {
-    [self.collectionView performBatchUpdates:^{
-        int resultsSize = [self.photoList count];
-        [self.photoList addObjectsFromArray:self.photoList];
-        NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
-        for (int i = resultsSize; i < resultsSize + self.photoList.count; i++){
-            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+
+- (IBAction)infoForMechant:(id)sender{
+    
+}
+
+- (IBAction)tappedUpButton:(id)sender
+{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.7f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    transition.type = kCATransitionFade;
+    
+    [barra_top.layer addAnimation:transition forKey:nil];
+    [barra_down.layer addAnimation:transition forKey:nil];
+    
+    barra_top.hidden = YES;
+    barra_down.hidden = YES;
+}
+
+- (IBAction)tappedDownButton:(id)sender
+{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.7f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    transition.type = kCATransitionFade;
+    
+    [barra_top.layer addAnimation:transition forKey:nil];
+    [barra_down.layer addAnimation:transition forKey:nil];
+    
+    barra_top.hidden = NO;
+    barra_down.hidden = NO;
+}
+
+- (IBAction)tappedRightButton:(id)sender
+{
+    int pageToGo = [self.pageControl currentPage] + 1;
+    if(pageToGo>=0){
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 1.0f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type = kCATransitionFade;
+        
+        [self.ui_slides.layer addAnimation:transition forKey:nil];
+        
+        self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
+        self.pageControl.currentPage = pageToGo;
+        
+        /// NSUserDefaults
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        /// card holder number
+        [prefs setObject:[self.idsList objectAtIndex:pageToGo] forKey:@"id_merchant_selected"];
+        /// we syncrho the preferences
+        [prefs synchronize];
+
+    }
+}
+
+- (IBAction)tappedLeftButton:(id)sender
+{
+    int pageToGo = [self.pageControl currentPage] - 1;
+    if(pageToGo>=0){
+        CATransition *transition = [CATransition animation];
+        transition.duration = 1.0f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type = kCATransitionFade;
+        
+        [self.ui_slides.layer addAnimation:transition forKey:nil];
+        
+        self.ui_slides.image =[self.vistas objectAtIndex:pageToGo];
+        self.pageControl.currentPage = pageToGo;
+        
+        /// NSUserDefaults
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        /// card holder number
+        [prefs setObject:[self.idsList objectAtIndex:pageToGo] forKey:@"id_merchant_selected"];
+        /// we syncrho the preferences
+        [prefs synchronize];
+    }
+}
+
+- (IBAction) changePage:(id)sender {
+    self.ui_slides.image =[self.vistas objectAtIndex:[self.pageControl currentPage]];
+}
+
+
+- (void)downloadMercantesMembresiasPagadas {
+    // make up some test data
+    self.avatarList = [NSMutableArray arrayWithCapacity:1];
+    self.idsList = [NSMutableArray arrayWithCapacity:1];
+    self.homeList = [NSMutableArray arrayWithCapacity:1];
+    // Set up the views array with 3 UIImageViews
+    self.vistas = [NSMutableArray arrayWithCapacity:1];
+    /// we initialize the helper
+    SatelliteHelper *helper = [[SatelliteHelper alloc] init];
+    /// this will show me the response
+    NSString *response = [helper readMercantesPorMembresias:@"1,2,3"];
+    /// let's configure the data
+    NSData* data=[response dataUsingEncoding: [NSString defaultCStringEncoding] ];
+    /// error for the json objects
+    NSError *error = nil;
+    /// now we get an array of the all json file
+    jsonObjects = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    int count = 0;
+    /// let's loop foreach on the statement
+    for(NSDictionary *keys in jsonObjects){
+        NSString *_id = [keys objectForKey:@"ID"];
+        NSString *avatar = [keys objectForKey:@"UrlImageLogo"];
+        NSString *img_home = [keys objectForKey:@"UrlImageHome"];
+        
+        /// let's make a circle of the avatar for the company
+        UIImage *imagesHome = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:img_home]]];
+        if(imagesHome!=nil){
+            /// we add the promotion
+            [self.avatarList addObject:avatar];
+            [self.idsList addObject:_id];
+            [self.homeList addObject:img_home];
+            [self.vistas addObject:imagesHome];
+            count++;
         }
-     [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
-    }    completion:nil];
-}
-/// -(void)reRenderCoupons
--(void)reRender
-{
-    [self.photoList removeAllObjects];
-    [self.collectionView reloadData];
-    
-    //[self getUsersTransactions];
-    [self downloadPromocionesCategorias];
-    
-    [self performSelector:@selector(updateTable) withObject:nil afterDelay:1];
-}
-/// UpdateTable Method
-- (void)updateTable
-{
-    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-    [self.collectionView reloadData];
-    /// End Refreshing
-    [self.refreshControl endRefreshing];
+    }
+    /// first image load
+    self.ui_slides.image =[self.vistas objectAtIndex:0];
+    /// we set the pages with the images that we have
+    self.pageControl.numberOfPages = count;
+    self.pageControl.currentPage = 0;
+    /// NSUserDefaults
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    /// card holder number
+    [prefs setObject:[self.idsList objectAtIndex:0] forKey:@"id_merchant_selected"];
+    /// we syncrho the preferences
+    [prefs synchronize];
+
+    /// response to the log
+    NSLog(@"%@",response);
 }
 /*
  *
@@ -112,6 +217,40 @@
  *
  */
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+/**/
+- (void)categoryViewControllerDidFinish:(CategoryControllerViewTableViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+/*
+ *
+ */
+- (void)menuViewControllerDidFinish:(MenuViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+/*
+ *
+ */
+- (void)wallViewControllerDidFinish:(WallViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+///
+- (void)merchantInfoViewControllerDidFinish:(MerchantInfoViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+///
+- (void)mapsViewControllerDidFinish:(MapsViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+///
+- (void)searchViewControllerDidFinish:(SearchViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -181,239 +320,10 @@
     NSString *client = @"1";
     /// this will show me the response
     NSString *response = [helper acknowledgeRutas:lat Longitude:lon Speed:speed Altitude:alt Client:client];
+    /// we present answers to the debugers only if dif from nil
+    if(response!=nil){
     /// response to the log
     NSLog(@"%@",response);
-}
-/*
- *
- */
-- (void)downloadPromocionesCategorias {
-    // make up some test data
-    self.photoList = [NSMutableArray arrayWithCapacity:1];
-    self.contentList = [NSMutableArray arrayWithCapacity:1];
-    // make up some test data
-    NSMutableArray *datasource = [[NSMutableArray alloc] initWithObjects:nil];
-    /*[datasource addObject:@"danielle.jpg"];
-    [datasource addObject:@"bodegahead.png"];
-    [datasource addObject:@"egret.png"];
-    [datasource addObject:@"betceemay.jpg"];
-    [datasource addObject:@"baby.jpg"];*/
-    
-    
-    /// we initialize the helper
-    SatelliteHelper *helper = [[SatelliteHelper alloc] init];
-    /// this will show me the response
-    NSString *response = [helper readPromocionesPorCategorias:@"1"];
-    /// let's configure the data
-    NSData* data=[response dataUsingEncoding: [NSString defaultCStringEncoding] ];
-    /// error for the json objects
-    NSError *error = nil;
-    /// now we get an array of the all json file
-    jsonObjects = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    /// let's loop foreach on the statement
-    for(NSDictionary *keys in jsonObjects){
-        NSString *_id = [keys objectForKey:@"ID"];
-        NSString *mercante = [keys objectForKey:@"Mercante"];
-        NSString *producto = [keys objectForKey:@"Producto"];
-        NSString *porcentaje = [keys objectForKey:@"Porcentaje"];
-        NSString *titulo = [keys objectForKey:@"Titulo"];
-        NSString *cuerpo = [keys objectForKey:@"Cuerpo"];
-        NSString *barra = [keys objectForKey:@"Barra"];
-        NSString *url_image = [keys objectForKey:@"UrlImage"];
-        NSString *fecha_comienzo = [keys objectForKey:@"FechaComienzo"];
-        NSString *fecha_termino = [keys objectForKey:@"FechaTermino"];
-        NSString *estado = [keys objectForKey:@"Estado"];
-        NSString *categoria = [keys objectForKey:@"Categoria"];
-        /// we add the promotion
-        [datasource addObject:url_image];
-        [self.contentList addObject:cuerpo];
-    }
-    
-    [self createFileList:datasource];
-    /// response to the log
-    NSLog(@"%@",response);
-}
-
-#pragma mark - Target Actions
-
-
-
-- (IBAction)onAddCell
-{
-    [self.photoList addObject:@"egret.png"];
-    
-    NSUInteger newNumCells = [self.photoList count];
-    NSIndexPath* newIndexPath = [NSIndexPath indexPathForItem:newNumCells - 1
-                                                    inSection:0];
-    [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
-    
-    [self.collectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-}
-
-- (void)createFileList:(NSArray *)items
-{
-    for(NSString *item in items)
-    {
-        [self.photoList addObject:item];
     }
 }
-
-#pragma mark - UICollectionViewDelegateJSPintLayout
-
-
-
-
-- (CGFloat)columnWidthForCollectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout
-{
-    return 135.0;
-}
-
-- (NSUInteger)maximumNumberOfColumnsForCollectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout
-{
-    NSUInteger numColumns = 2;
-    
-    return numColumns;
-}
-
-- (CGFloat)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout heightForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    NSUInteger index = [indexPath indexAtPosition:1];
-    
-    //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
-    UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
-    CGSize rctSizeOriginal = imageView.bounds.size;
-    double scale = (222  - (kCollectionCellBorderLeft + kCollectionCellBorderRight)) / rctSizeOriginal.width;
-    CGSize rctSizeFinal = CGSizeMake(rctSizeOriginal.width * scale,rctSizeOriginal.height * scale);
-    imageView.frame = CGRectMake(kCollectionCellBorderLeft,kCollectionCellBorderTop,rctSizeFinal.width,rctSizeFinal.height);
-    
-    CGFloat height = imageView.bounds.size.height + 100;
-    
-    return height;
-}
-
-- (BOOL)collectionView:(UICollectionView*)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    return YES;
-}
-
-- (BOOL)collectionView:(UICollectionView*)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
-{
-    return([NSStringFromSelector(action) isEqualToString:@"cut:"]);
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
-{
-    if([NSStringFromSelector(action) isEqualToString:@"cut:"])
-    {
-        NSUInteger index = [indexPath indexAtPosition:1];
-        
-        [self.photoList removeObjectAtIndex:index];
-        
-        [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
-    }
-}
-
-
-
-#pragma mark = UICollectionViewDataSource
-
-
-
-- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return [self.photoList count];
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
-{
-    return 1;
-}
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PintReuse" forIndexPath:indexPath];
-    
-    CGRect rectReference = cell.bounds;
-    
-    PCollectionCellBackgroundView* backgroundView = [[PCollectionCellBackgroundView alloc] initWithFrame:rectReference];
-    cell.backgroundView = backgroundView;
-    
-    UIView* selectedBackgroundView = [[UIView alloc] initWithFrame:rectReference];
-    selectedBackgroundView.backgroundColor = [UIColor clearColor];   // no indication of selection
-    cell.selectedBackgroundView = selectedBackgroundView;
-    
-    // remove subviews from previous usage of this cell
-    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    NSUInteger index = [indexPath indexAtPosition:1];
-    
-    UIImageView* imageView = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
-    
-    //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photoList[index]]];
-    
-    CGSize rctSizeOriginal = imageView.bounds.size;
-    double scale = (cell.bounds.size.width  - (kCollectionCellBorderLeft + kCollectionCellBorderRight)) / rctSizeOriginal.width;
-    CGSize rctSizeFinal = CGSizeMake(rctSizeOriginal.width * scale,rctSizeOriginal.height * scale);
-    imageView.frame = CGRectMake(kCollectionCellBorderLeft,kCollectionCellBorderTop,rctSizeFinal.width,rctSizeFinal.height);
-    
-    [cell.contentView addSubview:imageView];
-    
-    CGRect rctLabel = CGRectMake(kCollectionCellBorderLeft,kCollectionCellBorderTop + rctSizeFinal.height + 5,rctSizeFinal.width,65);
-    
-    UILabel* label = [[UILabel alloc] initWithFrame:rctLabel];
-    label.numberOfLines = 0;
-    label.font = [UIFont systemFontOfSize:12];
-    
-    //label.text = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
-    label.text = self.contentList[index];
-    
-    [cell.contentView addSubview:label];
-    
-    /// this is the actual size of the cell
-    CGRect fPrev = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath].frame;
-    CGFloat height = fPrev.size.height;
-    CGFloat width = fPrev.size.width;
-    /// let's make a circle of the avatar for the company
-    UIImageView* imageViewSpliter = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"splitImage.png"] ];
-    imageViewSpliter.frame = CGRectMake(0,height-70,width,1);
-    [cell.contentView addSubview:imageViewSpliter];
-
-    /// let's make a circle of the avatar for the company
-    UIImageView* imageViewTag = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396308511_tag_fill.png"] ];
-    imageViewTag.frame = CGRectMake(width-30,height-60,20,20);
-    [cell.contentView addSubview:imageViewTag];
-    
-    /// let's make a circle of the avatar for the company
-    UIImageView* imageViewShare = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396308581_share.png"] ];
-    imageViewShare.frame = CGRectMake(width-65,height-60,20,20);
-    [cell.contentView addSubview:imageViewShare];
-
-    
-    /// let's make a circle of the avatar for the company
-    UIImageView* imageViewFavorite = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396306261_star.png"] ];
-    imageViewFavorite.frame = CGRectMake(width-30,height-30,20,20);
-    [cell.contentView addSubview:imageViewFavorite];
-    
-    /// let's make a circle of the avatar for the company
-    UIImageView* imageViewPin = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"1396307328_pin.png"] ];
-    imageViewPin.frame = CGRectMake(width-65,height-30,20,20);
-    [cell.contentView addSubview:imageViewPin];
-
-    /// let's make a circle of the avatar for the company
-    UIImageView* imageViewAvatar = [[UIImageView alloc] initWithImage: [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photoList[index]]]] ];
-    //imageViewAvatar.layer.cornerRadius = 8.f;
-    imageViewAvatar.layer.cornerRadius = 25;
-    imageViewAvatar.clipsToBounds = YES;
-    // imageViewAvatar.layer.borderColor = [UIColor whiteColor].CGColor;
-    // imageViewAvatar.layer.borderWidth = 3.0;
-    
-    imageViewAvatar.frame = CGRectMake(4,height-60,50,50);
-    [cell.contentView addSubview:imageViewAvatar];
-    
-    
-    
-    return cell;
-    
-}
-
 @end

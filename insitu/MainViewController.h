@@ -7,10 +7,14 @@
 //
 
 #import "FlipsideViewController.h"
-#import "PCollectionViewLayout.h"
-#import "PCollectionCellBackgroundView.h"
+#import "MenuViewController.h"
+#import "WallViewController.h"
+#import "MerchantInfoViewController.h"
+#import "MapsViewController.h"
+#import "CategoryControllerViewTableViewController.h"
+#import "SearchViewController.h"
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegateJSPintLayout,UICollectionViewDelegate,UICollectionViewDataSource>{
+@interface MainViewController : UIViewController <SearchViewControllerDelegate,CategoryViewControllerDelegate,MapsViewControllerDelegate,FlipsideViewControllerDelegate,WallViewControllerDelegate,MenuViewControllerDelegate, MerchantInfoViewControllerDelegate,CLLocationManagerDelegate>{
     //Signature Drawing Items
     CGPoint lastPoint;
     //
@@ -21,6 +25,10 @@
     CLLocationManager *locationManager;
 #pragma mark - UIRefreshControl
     UIRefreshControl *refreshControl;
+    
+    UIPageControl *pageControl;
+    
+    BOOL pageControlBeingUsed;
 }
 #pragma mark - CLLocationManager
 @property (nonatomic, retain) IBOutlet CLLocationManager *locationManager;
@@ -28,4 +36,9 @@
 @property (nonatomic, retain) IBOutlet UIRefreshControl *refreshControl;
 #pragma mark - id jsonObjects
 @property (nonatomic, retain) IBOutlet id jsonObjects;
+
+@property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
+@property (nonatomic, retain) IBOutlet UIImageView *ui_slides;
+
+- (IBAction) changePage:(id)sender ;
 @end

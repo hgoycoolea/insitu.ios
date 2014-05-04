@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class MainViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>{
     //Signature Drawing Items
     CGPoint lastPoint;
