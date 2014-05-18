@@ -22,6 +22,4 @@
 @property (strong, nonatomic) id <MenuViewControllerDelegate> delegate;
 
 
-- (IBAction)done:(id)sender;
-
 @end

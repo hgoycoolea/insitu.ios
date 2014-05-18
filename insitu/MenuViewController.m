@@ -37,11 +37,6 @@
 
 #pragma mark - Actions
 
-- (IBAction)done:(id)sender
-{
-    [self.delegate menuViewControllerDidFinish:self];
-}
-
 #pragma mark - Flipside View
 /*
  *
@@ -50,15 +45,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-/*
- *
- */
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showAlternate"]) {
-        [[segue destinationViewController] setDelegate:self];
-    }
-}
+
 
 /**/
 -(void) loadUserInfo

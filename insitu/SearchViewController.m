@@ -362,11 +362,11 @@
         /// this cast the object
         PromoGrid *promo = (PromoGrid * )self.search_objects_results[index];
         /// NSUserDefaults
-        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        NSUserDefaults *prefs1 = [NSUserDefaults standardUserDefaults];
         /// card holder number
-        [prefs setObject:[NSString stringWithFormat:@"%d",promo.ID] forKey:@"parent_object_id"];
+        [prefs1 setObject:[NSString stringWithFormat:@"%d",promo.ID] forKey:@"parent_object_id"];
         /// we syncrho the preferences
-        [prefs synchronize];
+        [prefs1 synchronize];
     }
     
     //self performSegueWithIdentifier:@"candyDetail" sender:tableView];

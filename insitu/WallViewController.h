@@ -36,6 +36,4 @@
 #pragma mark - CLLocationManager
 @property (nonatomic, retain) IBOutlet CLLocationManager *locationManager;
 
-- (IBAction)done:(id)sender;
-
 @end

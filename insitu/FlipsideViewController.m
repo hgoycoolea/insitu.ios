@@ -37,12 +37,8 @@
 
 #pragma mark - Actions
 
-- (IBAction)done:(id)sender
+-(IBAction)fbTapped:(id)sender
 {
-    [self.delegate flipsideViewControllerDidFinish:self];
-}
-
--(IBAction)fbTapped:(id)sender{
     if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         
         SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
@@ -81,7 +77,6 @@
     }
 
 }
-
 - (IBAction)tweetTapped:(id)sender
 {
     /*
@@ -242,7 +237,6 @@
     
     
 }
-
 -(IBAction)tweetSigninRequest:(id)sender
 {
     ACAccountStore *store = [[ACAccountStore alloc] init];

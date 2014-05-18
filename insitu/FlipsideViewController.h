@@ -20,6 +20,4 @@
 
 @property (strong, nonatomic) id <FlipsideViewControllerDelegate> delegate;
 
-- (IBAction)done:(id)sender;
-
 @end
