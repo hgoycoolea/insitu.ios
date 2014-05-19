@@ -100,6 +100,8 @@
 		51A59AD6190335A100714201 /* PromotionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A59AD5190335A100714201 /* PromotionsViewController.m */; };
 		51A59AD91903564900714201 /* btn_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A59AD71903564900714201 /* btn_close.png */; };
 		51A59ADA1903564900714201 /* btn_comprar.png in Resources */ = {isa = PBXBuildFile; fileRef = 51A59AD81903564900714201 /* btn_comprar.png */; };
+		51BEADE5192954DC000FC449 /* ClientHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BEADE4192954DC000FC449 /* ClientHelper.m */; };
+		51BEADE8192957F5000FC449 /* MerchantHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BEADE7192957F5000FC449 /* MerchantHelper.m */; };
 		51CAC80F18FCCF1C00A46491 /* wheel_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 51CAC80E18FCCF1C00A46491 /* wheel_white.png */; };
 		51CF032918FB0FA5001D0C37 /* GPSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF032818FB0FA5001D0C37 /* GPSManager.m */; };
 		51CF032C18FB151A001D0C37 /* MapsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF032B18FB151A001D0C37 /* MapsViewController.m */; };
@@ -317,6 +319,10 @@
 		51A59AD5190335A100714201 /* PromotionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromotionsViewController.m; sourceTree = "<group>"; };
 		51A59AD71903564900714201 /* btn_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_close.png; sourceTree = "<group>"; };
 		51A59AD81903564900714201 /* btn_comprar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_comprar.png; sourceTree = "<group>"; };
+		51BEADE3192954DC000FC449 /* ClientHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientHelper.h; sourceTree = "<group>"; };
+		51BEADE4192954DC000FC449 /* ClientHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientHelper.m; sourceTree = "<group>"; };
+		51BEADE6192957F5000FC449 /* MerchantHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantHelper.h; sourceTree = "<group>"; };
+		51BEADE7192957F5000FC449 /* MerchantHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantHelper.m; sourceTree = "<group>"; };
 		51CAC80E18FCCF1C00A46491 /* wheel_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_white.png; sourceTree = "<group>"; };
 		51CF032718FB0FA5001D0C37 /* GPSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSManager.h; sourceTree = "<group>"; };
 		51CF032818FB0FA5001D0C37 /* GPSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSManager.m; sourceTree = "<group>"; };
@@ -502,6 +508,10 @@
 				51CF032E18FB5E32001D0C37 /* MapPin.m */,
 				5159F32919159DE200120BE2 /* PromoGrid.h */,
 				5159F32A19159DE200120BE2 /* PromoGrid.m */,
+				51BEADE3192954DC000FC449 /* ClientHelper.h */,
+				51BEADE4192954DC000FC449 /* ClientHelper.m */,
+				51BEADE6192957F5000FC449 /* MerchantHelper.h */,
+				51BEADE7192957F5000FC449 /* MerchantHelper.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -855,9 +865,11 @@
 				10AEEFFB18E3933100706359 /* AppDelegate.m in Sources */,
 				10AEF09718E46DAA00706359 /* ASIAuthenticationDialog.m in Sources */,
 				10AEF09E18E46DAA00706359 /* ASINetworkQueue.m in Sources */,
+				51BEADE8192957F5000FC449 /* MerchantHelper.m in Sources */,
 				10AEF0FA18E4782D00706359 /* ref.cpp in Sources */,
 				10AEF00118E3933100706359 /* MainViewController.m in Sources */,
 				10AEF00418E3933200706359 /* FlipsideViewController.m in Sources */,
+				51BEADE5192954DC000FC449 /* ClientHelper.m in Sources */,
 				10AEF09918E46DAA00706359 /* ASIDataDecompressor.m in Sources */,
 				51CF032C18FB151A001D0C37 /* MapsViewController.m in Sources */,
 				10AEF09D18E46DAA00706359 /* ASIInputStream.m in Sources */,
